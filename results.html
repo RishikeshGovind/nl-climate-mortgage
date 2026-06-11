@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Municipality Profile — NL Climate Mortgage Risk</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #1e3a5f;
+      --navy-lt:   #2d5282;
+      --primary:   #00A6D6;
+      --danger:    #dc2626;
+      --warn:      #d97706;
+      --ok:        #16a34a;
+      --bg:        #f8fafc;
+      --card:      #ffffff;
+      --border:    #e5e7eb;
+      --text:      #111827;
+      --text-muted:#6b7280;
+      --text-dim:  #9ca3af;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    html, body {
+      height: auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* ── Header */
+    #app-header {
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      height: 52px;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    }
+
+    .back-link {
+      color: rgba(255,255,255,.85);
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color .15s;
+    }
+    .back-link:hover { color: #fff; }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255,255,255,.2);
+      flex-shrink: 0;
+    }
+
+    .header-title {
+      flex: 1;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.9);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .header-badge {
+      font-size: .72rem;
+      color: rgba(255,255,255,.55);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* ── Loading */
+    #profile-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 1rem;
+      color: var(--text-muted);
+    }
+
+    .profile-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid #e2e8f0;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: pspin .8s linear infinite;
+    }
+    @keyframes pspin { to { transform: rotate(360deg); } }
+
+    /* ── Main container */
+    #profile-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* ── Hero */
+    .prof-hero {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .prof-hero-left {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .prof-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: .4rem;
+    }
+
+    .prof-meta {
+      font-size: .9rem;
+      color: var(--text-muted);
+      margin-bottom: .75rem;
+    }
+
+    .prof-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .prof-tag-high { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .prof-tag-mid  { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+    .prof-tag-low  { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+    /* Score card */
+    .prof-score-card {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      min-width: 180px;
+      box-shadow: 0 4px 20px rgba(30,58,95,.3);
+    }
+
+    .prof-score-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+      margin-bottom: .4rem;
+    }
+
+    .prof-score-val {
+      font-family: var(--font-mono);
+      font-size: 3.5rem;
+      font-weight: 600;
+      line-height: 1;
+      color: #fb923c;
+    }
+
+    .prof-score-max {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.45);
+    }
+
+    .prof-rank {
+      margin-top: .6rem;
+      font-size: .78rem;
+      color: rgba(255,255,255,.6);
+    }
+
+    .prof-rank strong { color: rgba(255,255,255,.9); }
+
+    /* ── Sections */
+    .prof-section {
+      margin-bottom: 1.75rem;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid #e5e7eb;
+      letter-spacing: .01em;
+    }
+
+    /* ── Risk cards grid */
+    .risk-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .risk-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+
+    .risk-card-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: .5rem;
+    }
+
+    .risk-card-value {
+      font-family: var(--font-mono);
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: .75rem;
+    }
+
+    .risk-card-value.v-high { color: var(--danger); }
+    .risk-card-value.v-mid  { color: var(--warn); }
+    .risk-card-value.v-low  { color: var(--ok); }
+
+    .risk-bar-track {
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: .6rem;
+    }
+
+    .risk-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .5s ease;
+    }
+    .risk-bar-fill.v-high { background: linear-gradient(90deg, #fca5a5, #dc2626); }
+    .risk-bar-fill.v-mid  { background: linear-gradient(90deg, #fde68a, #d97706); }
+    .risk-bar-fill.v-low  { background: linear-gradient(90deg, #bbf7d0, #16a34a); }
+
+    .risk-card-context {
+      font-size: .75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ── Exposure formula */
+    .formula-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+
+    .formula-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: .65rem 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .formula-row:last-child { border-bottom: none; }
+
+    .formula-row.formula-total {
+      margin-top: .25rem;
+      padding-top: .75rem;
+      border-top: 2px solid #e5e7eb;
+      border-bottom: none;
+      font-weight: 600;
+    }
+
+    .formula-label {
+      flex: 1;
+      font-size: .83rem;
+      color: var(--text);
+    }
+
+    .formula-label small {
+      display: block;
+      font-size: .72rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 1px;
+    }
+
+    .formula-bar-wrap {
+      width: 160px;
+      flex-shrink: 0;
+    }
+
+    .formula-bar-track {
+      height: 8px;
+      background: #f1f5f9;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .formula-bar-fill-woz     { height: 100%; background: #a855f7; border-radius: 4px; }
+    .formula-bar-fill-climate { height: 100%; background: #3b82f6; border-radius: 4px; }
+    .formula-bar-fill-total   { height: 100%; background: linear-gradient(90deg, #fecc5c, #f03b20); border-radius: 4px; }
+
+    .formula-pts {
+      font-family: var(--font-mono);
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--navy);
+      width: 52px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ── Risk note */
+    .risk-note-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #3b82f6;
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      font-size: .85rem;
+      color: #1e40af;
+      line-height: 1.6;
+    }
+
+    /* ── National ranking */
+    .ranking-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .ranking-stat {
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .ranking-stat-val {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: .25rem;
+    }
+
+    .ranking-stat-label {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .ranking-divider {
+      width: 1px;
+      height: 50px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .ranking-bar-section {
+      flex: 2;
+      min-width: 200px;
+    }
+
+    .ranking-bar-label {
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-bottom: .4rem;
+    }
+
+    .ranking-bar-track {
+      height: 12px;
+      background: #f1f5f9;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ranking-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #fecc5c, #f03b20);
+      border-radius: 6px;
+    }
+
+    .ranking-bar-marker {
+      position: absolute;
+      top: -3px;
+      width: 3px;
+      height: 18px;
+      background: var(--navy);
+      border-radius: 2px;
+      transform: translateX(-50%);
+    }
+
+    /* ── Footer */
+    .prof-footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-text {
+      font-size: .78rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: .5rem;
+    }
+
+    .footer-disclaimer {
+      font-size: .72rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header -->
+  <header id="app-header">
+    <a href="./index.html" class="back-link">← Map</a>
+    <div class="header-divider"></div>
+    <span class="header-title" id="header-title">Municipality Profile</span>
+    <span class="header-badge">NL Climate Mortgage Risk · TU Delft / CBS 2022</span>
+  </header>
+
+  <!-- ── Loading -->
+  <div id="profile-loading">
+    <div class="profile-spinner"></div>
+    <span>Loading profile…</span>
+  </div>
+
+  <!-- ── Profile content -->
+  <div id="profile-content" style="display:none">
+
+    <!-- Hero -->
+    <div class="prof-hero">
+      <div class="prof-hero-left">
+        <h1 class="prof-name" id="prof-name"></h1>
+        <div class="prof-meta" id="prof-meta"></div>
+        <span id="prof-tag"></span>
+      </div>
+      <div class="prof-score-card">
+        <div class="prof-score-label">Mortgage Exposure Index</div>
+        <div>
+          <span class="prof-score-val" id="prof-score"></span>
+          <span class="prof-score-max">/100</span>
+        </div>
+        <div class="prof-rank" id="prof-rank"></div>
+      </div>
+    </div>
+
+    <!-- Risk factors -->
+    <section class="prof-section">
+      <h2 class="section-title">Risk Factors</h2>
+      <div class="risk-cards" id="risk-cards"></div>
+    </section>
+
+    <!-- Exposure calculation -->
+    <section class="prof-section">
+      <h2 class="section-title">Exposure Score Breakdown</h2>
+      <div class="formula-card" id="formula-card"></div>
+    </section>
+
+    <!-- National ranking -->
+    <section class="prof-section">
+      <h2 class="section-title">National Context</h2>
+      <div class="ranking-card" id="ranking-card"></div>
+    </section>
+
+    <!-- Risk note (conditional) -->
+    <section class="prof-section" id="risk-note-section" style="display:none">
+      <h2 class="section-title">Site-Specific Note</h2>
+      <div class="risk-note-box" id="risk-note-box"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="prof-footer">
+      <p class="footer-text">
+        <strong>Data sources:</strong> CBS StatLine 85039NED (property values, demographics) ·
+        KNMI Climate Atlas (flood probability) · TNO Bodemdaling Monitor (foundation risk) ·
+        Klimaateffectatlas.nl · PDOK boundaries (2022)
+      </p>
+      <p class="footer-disclaimer">
+        Risk scores are indicative and derived from province-level assessments with municipal
+        overrides for well-documented cases. For research purposes only.
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      function escapeHtml(v) {
+        return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      }
+
+      // ── Read localStorage
+      const gmc   = localStorage.getItem('profile_gmc');
+      const naam  = localStorage.getItem('profile_naam');
+      const rank  = parseInt(localStorage.getItem('profile_rank')  || '0', 10);
+      const total = parseInt(localStorage.getItem('profile_total') || '352', 10);
+      let gm;
+      try { gm = JSON.parse(localStorage.getItem('profile_data') || 'null'); } catch (_) { gm = null; }
+
+      if (!gm || !naam) {
+        window.location.href = './index.html';
+        return;
+      }
+
+      // ── Helpers
+      function pct(v)    { return v != null ? Math.round(v * 100) : null; }
+      function fmtWoz(v) { return v != null ? `€${v.toFixed(0)}k` : '–'; }
+
+      function riskLevel(p) {
+        if (p >= 70) return 'high';
+        if (p >= 45) return 'mid';
+        return 'low';
+      }
+
+      function riskLabel(p) {
+        if (p >= 70) return 'High risk';
+        if (p >= 45) return 'Moderate risk';
+        return 'Lower risk';
+      }
+
+      function riskContext(type, p) {
+        if (type === 'flood') {
+          if (p >= 70) return 'Significant inundation risk from rivers, sea, or extreme rainfall. Properties in these areas face potential value erosion if flood defences are tested.';
+          if (p >= 45) return 'Elevated flood probability due to floodplain proximity or coastal exposure. Mortgage collateral carries above-average climate sensitivity.';
+          return 'Below Dutch average. Topographic elevation or strong coastal protection provides a buffer against inundation events.';
+        }
+        if (type === 'foundation') {
+          if (p >= 70) return 'Peat-heavy subsoil or active gas extraction zones. High likelihood of differential settlement and foundation damage over typical mortgage terms.';
+          if (p >= 45) return 'Mixed soil conditions. Peat pockets or shallow water tables may cause localised subsidence, particularly for older building stock.';
+          return 'Stable substrate (predominantly sand or firm clay). Foundation damage from soil movement is unlikely under normal conditions.';
+        }
+        if (type === 'drought') {
+          if (p >= 70) return 'Severe drought exposure raises peat oxidation and shrinkage risk, compounding subsidence in low-lying areas.';
+          if (p >= 45) return 'Moderate drought risk. Dry summers can accelerate peat shrinkage and increase foundation movement for vulnerable properties.';
+          return 'Lower drought sensitivity. Soil type and water management limit subsidence risk from dry periods.';
+        }
+        return '';
+      }
+
+      function wozContext(v) {
+        if (v == null) return 'Property value data unavailable.';
+        if (v >= 400) return `Premium market. High absolute collateral value means large potential losses even at moderate write-down rates.`;
+        if (v >= 250) return `Near or above the national median. Standard mortgage collateral dynamics apply.`;
+        return `Below national median. Lower absolute exposure but may reflect market discounting of structural risks.`;
+      }
+
+      // ── Set title
+      document.title = `${naam} — NL Climate Mortgage Risk`;
+      document.getElementById('header-title').textContent = naam;
+
+      // ── Hero
+      document.getElementById('prof-name').textContent = naam;
+      const pop = gm.Population ? gm.Population.toLocaleString('nl-NL') : '–';
+      document.getElementById('prof-meta').textContent = `${gm.Provincie || ''} · Population ${pop}`;
+
+      const score = gm._exposure ?? 0;
+      const level = riskLevel(score);
+      const tagClass = level === 'high' ? 'prof-tag-high' : level === 'mid' ? 'prof-tag-mid' : 'prof-tag-low';
+      const tagText  = level === 'high' ? 'High Exposure' : level === 'mid' ? 'Moderate Exposure' : 'Lower Exposure';
+      document.getElementById('prof-tag').innerHTML = `<span class="prof-tag ${tagClass}">${escapeHtml(tagText)}</span>`;
+      document.getElementById('prof-score').textContent = score;
+
+      const percentile = total > 0 ? Math.round((1 - (rank - 1) / total) * 100) : 0;
+      document.getElementById('prof-rank').innerHTML =
+        rank > 0
+          ? `<strong>Rank #${escapeHtml(String(rank))}</strong> of ${escapeHtml(String(total))} municipalities · ${escapeHtml(String(percentile))}th percentile`
+          : 'Rank unavailable';
+
+      // ── Risk cards
+      const floodPct      = pct(gm._flood_risk);
+      const foundationPct = pct(gm._foundation_risk);
+      const droughtPct    = pct(gm._drought_risk);
+
+      const riskCards = [
+        { type: 'flood',      label: 'Flood Risk',       val: floodPct,      fmt: `${floodPct ?? '–'}%` },
+        { type: 'foundation', label: 'Foundation Risk',  val: foundationPct, fmt: `${foundationPct ?? '–'}%` },
+        { type: 'drought',    label: 'Drought Risk',     val: droughtPct,    fmt: `${droughtPct ?? '–'}%` },
+        { type: 'woz',        label: 'Avg Property Value', val: null, fmt: fmtWoz(gm._woz_value), noBar: true },
+      ];
+
+      document.getElementById('risk-cards').innerHTML = riskCards.map(card => {
+        const lvl = card.noBar ? '' : riskLevel(card.val ?? 0);
+        const barHtml = card.noBar ? '' : `
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill v-${lvl}" style="width:${card.val ?? 0}%"></div>
+          </div>`;
+        const ctx = card.noBar ? wozContext(gm._woz_value) : riskContext(card.type, card.val ?? 0);
+        const valClass = card.noBar ? '' : `v-${lvl}`;
+        return `
+          <div class="risk-card">
+            <div class="risk-card-label">${escapeHtml(card.label)}</div>
+            <div class="risk-card-value ${valClass}">${escapeHtml(card.fmt)}</div>
+            ${barHtml}
+            <div class="risk-card-context">${escapeHtml(ctx)}</div>
+          </div>`;
+      }).join('');
+
+      // ── Exposure formula
+      const climateComposite = gm._climate_composite
+        ?? (0.50 * (gm._flood_risk ?? 0) + 0.35 * (gm._foundation_risk ?? 0) + 0.15 * (gm._drought_risk ?? 0));
+      const wozNorm      = gm._woz_norm ?? 0.5;
+      const wozPts       = Math.round(wozNorm * 0.55 * 100);
+      const climatePts   = Math.round(climateComposite * 0.45 * 100);
+
+      document.getElementById('formula-card').innerHTML = `
+        <div class="formula-row">
+          <div class="formula-label">
+            Property Value component
+            <small>Normalised WOZ (${(wozNorm * 100).toFixed(0)}th percentile) × 55% weight</small>
+          </div>
+          <div class="formula-bar-wrap">
+            <div class="formula-bar-track">
+              <div class="formula-bar-fill-woz" style="width:${wozPts}%"></div>
+            </div>
+          </div>
+          <div class="formula-pts">${wozPts} pts</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-label">
+            Climate Hazard component
+            <small>Flood (50%) + Foundation (35%) + Drought (15%) × 45% weight</small>
+          </div>
+          <div class="formula-bar-wrap">
+            <div class="formula-bar-track">
+              <div class="formula-bar-fill-climate" style="width:${climatePts}%"></div>
+            </div>
+          </div>
+          <div class="formula-pts">${climatePts} pts</div>
+        </div>
+        <div class="formula-row formula-total">
+          <div class="formula-label">
+            Composite Exposure Index
+            <small>Property Value + Climate Hazard (rounded)</small>
+          </div>
+          <div class="formula-bar-wrap">
+            <div class="formula-bar-track">
+              <div class="formula-bar-fill-total" style="width:${score}%"></div>
+            </div>
+          </div>
+          <div class="formula-pts">${score}/100</div>
+        </div>`;
+
+      // ── National ranking card
+      const rankBarPct = rank > 0 && total > 0 ? ((total - rank) / total * 100).toFixed(1) : 0;
+      const markerLeft = rank > 0 && total > 0 ? ((total - rank) / total * 100).toFixed(1) : 0;
+
+      document.getElementById('ranking-card').innerHTML = `
+        <div class="ranking-stat">
+          <div class="ranking-stat-val">#${escapeHtml(String(rank || '—'))}</div>
+          <div class="ranking-stat-label">National Rank</div>
+        </div>
+        <div class="ranking-divider"></div>
+        <div class="ranking-stat">
+          <div class="ranking-stat-val">${escapeHtml(String(percentile))}%</div>
+          <div class="ranking-stat-label">Exposure Percentile</div>
+        </div>
+        <div class="ranking-divider"></div>
+        <div class="ranking-stat">
+          <div class="ranking-stat-val">${escapeHtml(String(score))}</div>
+          <div class="ranking-stat-label">Index Score</div>
+        </div>
+        <div class="ranking-divider"></div>
+        <div class="ranking-bar-section">
+          <div class="ranking-bar-label">Position among ${escapeHtml(String(total))} Dutch municipalities (low ← → high)</div>
+          <div class="ranking-bar-track">
+            <div class="ranking-bar-fill" style="width:100%"></div>
+            <div class="ranking-bar-marker" style="left:${markerLeft}%"></div>
+          </div>
+        </div>`;
+
+      // ── Risk note
+      if (gm._risk_note) {
+        document.getElementById('risk-note-section').style.display = 'block';
+        document.getElementById('risk-note-box').textContent = gm._risk_note;
+      }
+
+      // ── Show content
+      document.getElementById('profile-loading').style.display = 'none';
+      document.getElementById('profile-content').style.display = 'block';
+    })();
+  </script>
+</body>
+</html>

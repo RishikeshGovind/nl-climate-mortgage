@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NL Mortgage Climate Risk — TU Delft PhD Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══ STICKY HEADER ══ -->
+<header id="site-header">
+  <div class="header-inner">
+    <span class="site-logo">◈ NL Mortgage Climate Risk</span>
+    <nav class="site-nav">
+      <a href="#stress-test">Portfolio Analysis</a>
+      <a href="#methodology">Methodology</a>
+    </nav>
+    <span class="site-badge">TU Delft · PhD Research Demo</span>
+  </div>
+</header>
+
+<!-- ══ MAP — full-screen landing ══ -->
+<section id="map-section">
+  <div class="map-wrap">
+
+    <!-- MapLibre target -->
+    <div id="map"></div>
+
+    <!-- ── Floating control card ────────────────────────────────── -->
+    <div id="map-card">
+      <div class="mc-head">
+        <div class="mc-title">Mortgage Climate Risk</div>
+        <div class="mc-sub">When climate risk becomes financial risk</div>
+      </div>
+      <div class="mc-rule"></div>
+
+      <div class="mc-section-lbl">Climate Scenario</div>
+      <div class="mc-btns" id="mc-btns">
+        <button class="mc-btn active" data-scenario="baseline">
+          <span class="mc-btn-name">Baseline</span>
+          <span class="mc-btn-sub">2024</span>
+        </button>
+        <button class="mc-btn" data-scenario="moderate">
+          <span class="mc-btn-name">Moderate</span>
+          <span class="mc-btn-sub">~2°C · 2050</span>
+        </button>
+        <button class="mc-btn" data-scenario="severe">
+          <span class="mc-btn-name">Severe</span>
+          <span class="mc-btn-sub">~3°C · 2070</span>
+        </button>
+        <button class="mc-btn" data-scenario="extreme">
+          <span class="mc-btn-name">Extreme</span>
+          <span class="mc-btn-sub">~4°C · 2080</span>
+        </button>
+      </div>
+
+      <div class="mc-rule"></div>
+      <div class="mc-metrics" id="mc-metrics">
+        <!-- populated by JS -->
+      </div>
+
+      <div class="mc-rule"></div>
+      <div class="mc-section-lbl">Explore Cities</div>
+      <div class="mc-cities" id="mc-cities">
+        <button class="mc-city-btn" data-city="amsterdam">Amsterdam</button>
+        <button class="mc-city-btn" data-city="rotterdam">Rotterdam</button>
+        <button class="mc-city-btn" data-city="den_haag">Den Haag</button>
+        <button class="mc-city-btn" data-city="utrecht">Utrecht</button>
+        <button class="mc-city-btn" data-city="eindhoven">Eindhoven</button>
+      </div>
+
+      <div class="mc-rule"></div>
+      <div class="mc-foot">
+        <span id="mc-zoom-state">Select a city or zoom in</span>
+        <a href="#stress-test" class="mc-link">Portfolio analysis ↓</a>
+      </div>
+    </div>
+
+    <!-- ── Map overlays ─────────────────────────────────────────── -->
+    <div id="loading-overlay">
+      <div class="loading-card">
+        <div class="loading-spinner"></div>
+        <div id="loading-message">Loading data…</div>
+      </div>
+    </div>
+
+    <div id="map-legend"></div>
+    <div id="map-zoom-hint">Zoom in to explore individual buildings from BAG</div>
+    <div id="building-count-badge" class="hidden"></div>
+    <div id="building-loading" class="hidden">
+      <span class="mini-spinner"></span>Loading buildings…
+    </div>
+
+    <!-- Scroll cue at bottom -->
+    <div id="map-scroll-cue">
+      <span>Scroll for portfolio analysis</span>
+      <span class="scroll-arrow">↓</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PORTFOLIO OVERVIEW ══ -->
+<section id="overview">
+  <div class="container">
+    <h2 class="section-title">Dutch Residential Mortgage Portfolio — Baseline</h2>
+    <p class="section-desc">The Netherlands has one of the world's highest mortgage-debt-to-GDP ratios. A large share of this portfolio is geographically concentrated in areas exposed to two accelerating physical hazards: river and coastal flooding, and drought-induced foundation subsidence.</p>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-val" id="kpi-total-portfolio">—</div>
+        <div class="kpi-label">Total mortgage portfolio</div>
+        <div class="kpi-note">Residential, Netherlands</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val" id="kpi-flood-exposed">—</div>
+        <div class="kpi-label">In significant flood-risk zones</div>
+        <div class="kpi-note">Flood risk index &gt; 0.4</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val" id="kpi-found-exposed">—</div>
+        <div class="kpi-label">In high foundation-risk zones</div>
+        <div class="kpi-note">Peat soils, subsidence risk</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val">72%</div>
+        <div class="kpi-label">Average current LTV</div>
+        <div class="kpi-note">National baseline, DNB 2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STRESS TEST ══ -->
+<section id="stress-test">
+  <div class="container">
+    <h2 class="section-title">Climate Stress Test</h2>
+    <p class="section-desc">Select a scenario to model how property value declines — driven by market repricing of physical risk — shift the national LTV distribution. Properties in high-risk zones face disproportionate collateral erosion; the tail past the 100% LTV threshold quantifies the scope of negative-equity exposure.</p>
+
+    <div class="scenario-tabs" id="scenario-tabs">
+      <button class="scen-tab active" data-scenario="baseline">
+        <span class="scen-tab-label">Baseline</span>
+        <span class="scen-tab-sub">2024 · no stress</span>
+      </button>
+      <button class="scen-tab" data-scenario="moderate">
+        <span class="scen-tab-label">Moderate</span>
+        <span class="scen-tab-sub">~2 °C · 2050</span>
+      </button>
+      <button class="scen-tab" data-scenario="severe">
+        <span class="scen-tab-label">Severe</span>
+        <span class="scen-tab-sub">~3 °C · 2070</span>
+      </button>
+      <button class="scen-tab" data-scenario="extreme">
+        <span class="scen-tab-label">Extreme</span>
+        <span class="scen-tab-sub">~4 °C · 2080</span>
+      </button>
+    </div>
+
+    <div class="scen-desc-bar" id="scen-desc-bar"></div>
+
+    <div class="stress-layout">
+      <div class="chart-panel">
+        <div class="chart-header">
+          <div class="chart-title">LTV Distribution — National Mortgage Portfolio</div>
+          <div class="chart-legend">
+            <span class="cleg-item"><span class="cleg-swatch cleg-baseline"></span>Baseline</span>
+            <span class="cleg-item" id="cleg-scenario-item"><span class="cleg-swatch" id="cleg-scenario-swatch"></span><span id="cleg-scenario-label"></span></span>
+            <span class="cleg-item"><span class="cleg-swatch cleg-threshold"></span>100% LTV threshold</span>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="ltv-chart"></canvas>
+        </div>
+        <div class="chart-footer">Modelled LTV distribution weighted by municipal mortgage exposure. Tail beyond 100% = mortgages at negative equity under the selected scenario.</div>
+      </div>
+
+      <div class="metrics-panel" id="stress-metrics">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ METHODOLOGY ══ -->
+<section id="methodology">
+  <div class="container">
+    <h2 class="section-title">Research Framework &amp; Model</h2>
+
+    <!-- Mechanism chain (moved from hero) -->
+    <div class="mechanism-wrap">
+      <div class="mech-intro">The PhD investigates the financial transmission chain from physical hazard to systemic bank risk:</div>
+      <div class="mechanism">
+        <div class="mech-step">
+          <div class="mech-num">01</div>
+          <div class="mech-title">Physical Hazard</div>
+          <div class="mech-desc">Flooding, drought-induced foundation subsidence, soil degradation</div>
+        </div>
+        <div class="mech-arrow">→</div>
+        <div class="mech-step">
+          <div class="mech-num">02</div>
+          <div class="mech-title">Property Value Decline</div>
+          <div class="mech-desc">Market repricing as climate risk becomes visible in transaction prices</div>
+        </div>
+        <div class="mech-arrow">→</div>
+        <div class="mech-step mech-step-focus">
+          <div class="mech-num">03</div>
+          <div class="mech-title">LTV Ratio Breach</div>
+          <div class="mech-desc">Mortgage balance exceeds collateral value — homeowner is underwater</div>
+        </div>
+        <div class="mech-arrow">→</div>
+        <div class="mech-step">
+          <div class="mech-num">04</div>
+          <div class="mech-title">Homeowner Distress</div>
+          <div class="mech-desc">Negative equity, refinancing difficulty, forced sale or default</div>
+        </div>
+        <div class="mech-arrow">→</div>
+        <div class="mech-step">
+          <div class="mech-num">05</div>
+          <div class="mech-title">Portfolio Default Risk</div>
+          <div class="mech-desc">Concentrated losses erode bank capital buffers — systemic exposure</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <h3 class="method-card-title">LTV Stress Model</h3>
+        <p>For each municipality, a climate discount is applied to current average property values: <code>discount = α<sub>f</sub>·flood + α<sub>d</sub>·foundation + α<sub>dr</sub>·drought + α<sub>h</sub>·heat + α<sub>p</sub>·pluvial</code>. The stressed LTV shifts as <code>LTV* = LTV₀ / (1 − discount)</code>, capped at 60%. The national distribution is a weighted mixture of municipality Gaussians (σ = 18 pp). Flood risk: <code>clamp(0.68 − elev<sub>NAP</sub> × 0.10, 0.05, 0.95)</code> from AHN4. Heat risk proxied from urban density (UHI severity). Pluvial risk from impervious surface cover and terrain drainage capacity.</p>
+      </div>
+      <div class="method-card">
+        <h3 class="method-card-title">Scenario Parameters</h3>
+        <table class="method-table">
+          <thead><tr><th>Scenario</th><th>α<sub>flood</sub></th><th>α<sub>found.</sub></th><th>α<sub>drought</sub></th><th>α<sub>heat</sub></th><th>α<sub>pluvial</sub></th></tr></thead>
+          <tbody>
+            <tr><td>Baseline</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>Moderate 2°C</td><td>0.06</td><td>0.10</td><td>0.04</td><td>0.03</td><td>0.04</td></tr>
+            <tr><td>Severe 3°C</td><td>0.14</td><td>0.22</td><td>0.09</td><td>0.07</td><td>0.09</td></tr>
+            <tr><td>Extreme 4°C</td><td>0.25</td><td>0.38</td><td>0.16</td><td>0.12</td><td>0.15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="method-card">
+        <h3 class="method-card-title">Data Sources</h3>
+        <ul class="method-list">
+          <li>CBS StatLine 85039NED — Municipal WOZ valuations &amp; owner-occupation rates (2022)</li>
+          <li>PDOK AHN4 DTM 0.5m — Real NAP elevation → flood &amp; foundation risk (WCS)</li>
+          <li>Province soil classification — Peat/clay/sandy modifier for foundation risk</li>
+          <li>KNMI Climate Atlas — Drought &amp; heat stress frequency projections</li>
+          <li>Klimaateffectatlas.nl — Pluvial flooding (wateroverlast) exposure</li>
+          <li>DNB Statistics — Mortgage portfolio aggregates</li>
+          <li>PDOK BAG — Building footprints &amp; construction years (live)</li>
+        </ul>
+      </div>
+      <div class="method-card">
+        <h3 class="method-card-title">PhD Research Direction</h3>
+        <p>This demo implements a static stress model. The PhD research will replace this with a dynamic Agent-Based Model (building on RHEA and Bank of England ABMs) incorporating behavioural responses from homeowners, banks, and investors — capturing feedback loops between price expectations, lending standards, and realised defaults over the mortgage term (2025–2055).</p>
+      </div>
+    </div>
+
+    <!-- ── Limitations & Roadmap ──────────────────────────────────── -->
+    <div class="limits-head">
+      <h3 class="limits-title">Current Model Limitations &amp; Research Roadmap</h3>
+      <p class="limits-sub">This demo is an honest approximation. Every simplification below represents a concrete research task for the PhD.</p>
+    </div>
+
+    <div class="limits-grid">
+
+      <div class="limit-card limit-card--warn">
+        <div class="limit-icon">⚠</div>
+        <h4 class="limit-card-title">No per-property mortgage data</h4>
+        <p class="limit-body">The demo applies the national average LTV (72%) uniformly to every building. In reality, ~45% of Dutch residential buildings are social housing (woningcorporaties) or private rental — these have <em>no individual mortgage exposure</em>. Even among owner-occupied homes, ~32% are mortgage-free.</p>
+        <div class="limit-fix">
+          <span class="limit-fix-label">Current proxy</span>
+          Unit count from BAG — 1-unit buildings ≈ 68% mortgage probability; 50+ units ≈ 4% (woningcorporatie)
+        </div>
+        <div class="limit-fix limit-fix--future">
+          <span class="limit-fix-label">PhD data</span>
+          CBS microdata environment: address-level linked property × ownership × mortgage registry (standard Dutch university access)
+        </div>
+      </div>
+
+      <div class="limit-card limit-card--warn">
+        <div class="limit-icon">⚠</div>
+        <h4 class="limit-card-title">Discount factors (α) are calibrated, not estimated</h4>
+        <p class="limit-body">The α<sub>flood</sub>, α<sub>foundation</sub> etc. multipliers are set from literature (Bernstein et al. 2019, DNB 2021) rather than estimated econometrically from Dutch transaction data. The true hedonic discount for Dutch flood risk is contested — some studies find 3–8%, others find no statistically significant effect due to flood-risk myopia.</p>
+        <div class="limit-fix limit-fix--future">
+          <span class="limit-fix-label">PhD method</span>
+          Hedonic regression on Kadaster transaction data (2010–2024) with spatial RD around flood-zone boundaries to identify causal price impacts
+        </div>
+      </div>
+
+      <div class="limit-card limit-card--warn">
+        <div class="limit-icon">⚠</div>
+        <h4 class="limit-card-title">Municipality-centroid elevation, not per-building</h4>
+        <p class="limit-body">AHN4 elevation is queried at the municipality centroid — a single point representing ~340 km² in rural areas. Within Amsterdam alone, elevation ranges from −5 m (deep Watergraafsmeer polder) to +4 m (Amsteldijk). Two buildings 500 m apart can have radically different flood exposure.</p>
+        <div class="limit-fix">
+          <span class="limit-fix-label">Current state</span>
+          AHN4 real elevation for 339/345 municipalities — vastly better than province-level hand-coding
+        </div>
+        <div class="limit-fix limit-fix--future">
+          <span class="limit-fix-label">PhD data</span>
+          Per-building AHN4 query using BAG centroid coordinates; or join with Risicokaart flood-depth rasters (25 m resolution) directly
+        </div>
+      </div>
+
+      <div class="limit-card limit-card--warn">
+        <div class="limit-icon">⚠</div>
+        <h4 class="limit-card-title">Static model — no feedback dynamics</h4>
+        <p class="limit-body">The stress test shifts LTV in one step with no behavioural responses: no bank deleveraging, no panic selling, no insurance withdrawal, no expectation formation. In practice, once climate risk becomes visible in prices, a feedback loop between declining collateral, tighter lending standards, and further price falls can amplify losses non-linearly.</p>
+        <div class="limit-fix limit-fix--future">
+          <span class="limit-fix-label">PhD model</span>
+          Agent-Based Model (RHEA-NL): heterogeneous homeowners, banks, and investors interact over 2025–2055; captures fire-sale externalities and endogenous credit tightening
+        </div>
+      </div>
+
+      <div class="limit-card limit-card--info">
+        <div class="limit-icon">→</div>
+        <h4 class="limit-card-title">Data sources unlocked at PhD stage</h4>
+        <ul class="limit-list">
+          <li><strong>CBS microdata (Remote Access)</strong> — Address-level linked property value, ownership type, mortgage amount, household income. Standard access for TU Delft PhDs.</li>
+          <li><strong>DNB AnaCredit</strong> — Loan-level mortgage data reported by Dutch banks under ECB regulation. Requires DNB research collaboration agreement.</li>
+          <li><strong>Kadaster transaction data</strong> — All NL property sales 2000–present with full address, price, and buyer/seller. Available via CBS microdata linkage.</li>
+          <li><strong>BRO geotechnical boreholes</strong> — Per-address soil profiles (peat depth, groundwater level) for precise foundation risk. Freely available via PDOK.</li>
+          <li><strong>KNMI'23 scenarios at 1 km</strong> — High-resolution climate projections to 2100 under W, Wh, G, Gh scenarios. Published 2023, openly available.</li>
+          <li><strong>NHG portfolio data</strong> — National Mortgage Guarantee risk classifications by postcode; available through NHG research partnership.</li>
+        </ul>
+      </div>
+
+      <div class="limit-card limit-card--info">
+        <div class="limit-icon">→</div>
+        <h4 class="limit-card-title">Known unknowns not yet modelled</h4>
+        <ul class="limit-list">
+          <li><strong>Insurance withdrawal</strong> — Insurers are already non-renewing flood policies in parts of Zeeland and Groningen. Uninsurability accelerates price correction beyond the physical damage channel.</li>
+          <li><strong>Renovation &amp; adaptation</strong> — Flood-proofing, heat pump retrofits, and foundation reinforcement can reduce risk but require capital. Current model treats buildings as static.</li>
+          <li><strong>Social housing stock</strong> — Woningcorporaties have €200B+ in bonds. Climate-related impairment of their collateral poses systemic risk via a different channel (not individual LTV but institutional solvency).</li>
+          <li><strong>Spatial correlation</strong> — When flood risk materialises, many mortgages fail simultaneously (correlated defaults). A Gaussian mixture model understates tail dependence.</li>
+          <li><strong>Risk myopia &amp; disclosure lag</strong> — Dutch buyers currently do not receive mandatory flood-risk disclosure at point of sale (unlike the US NFIP). Pricing may correct abruptly once disclosure becomes mandatory.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer id="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-logo">◈ NL Mortgage Climate Risk</span>
+      <span class="footer-note">PhD Research Demo · TU Delft / Delft Institute of Applied Mathematics · CBS 2022 · PDOK BAG live · For research purposes only</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
