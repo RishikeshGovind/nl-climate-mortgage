@@ -138,6 +138,7 @@ function computeRiskScores(riskData) {
     gm._elev_m              = ov.flood_risk_ahn_m   ?? null;
     gm._mortgage_penetration = ov.mortgage_penetration ?? null;   // CBS owner-occ × 0.68
     gm._owner_occupied_pct  = ov.owner_occupied_pct  ?? null;
+    gm._base_ltv            = ov.base_ltv            ?? BASE_LTV_MEAN; // CBS/DNB per-muni LTV
     gm._woz_norm        = ((gm._woz_value || 0) - wozMin) / wozRange;
   }
 }
@@ -160,7 +161,7 @@ function precomputeAllScenarios() {
     for (const gm of Object.values(gemeenteData)) {
       const d      = municipalDiscount(gm, scenario);
       const factor = 1 / (1 - d);
-      const mu     = BASE_LTV_MEAN * factor;
+      const mu     = (gm._base_ltv || BASE_LTV_MEAN) * factor;
       const sigma  = LTV_STD       * factor;
       gm[`_uw_${scenario.id}`] = Math.round(pctAboveLTV(100, mu, sigma) * 1000) / 10; // % to 1dp
     }
@@ -182,20 +183,21 @@ function computeScenarioStats(scenarioId) {
 
     const mortgaged  = (gm.Population / AVG_HH_SIZE) * MORTGAGE_PENETRATION;
     const woz        = gm._woz_value || 250;
-    const balance    = woz * BASE_LTV_MEAN / 100;         // avg mortgage balance in €k
+    const muniLTV    = gm._base_ltv  || BASE_LTV_MEAN;
+    const balance    = woz * muniLTV / 100;               // avg mortgage balance in €k
     const exposure   = mortgaged * balance;               // €k
 
     const d          = municipalDiscount(gm, scenario);
     const factor     = 1 / (1 - d);
-    const mu         = BASE_LTV_MEAN * factor;
-    const sigma      = LTV_STD       * factor;
+    const mu         = muniLTV * factor;
+    const sigma      = LTV_STD * factor;
     const puw        = pctAboveLTV(100, mu, sigma);
 
     totalMortgages   += mortgaged;
     atRiskMortgages  += mortgaged * puw;
     rawTotalExp      += exposure;
     rawAtRiskExp     += exposure * puw;
-    ltvShiftWeighted += mortgaged * (mu - BASE_LTV_MEAN);
+    ltvShiftWeighted += mortgaged * (mu - muniLTV);
     if (puw * 100 > 5) highRiskMunis++;
   }
 
@@ -255,7 +257,8 @@ function computeBuildingRisk(identificatie, bouwjaar, units, scenarioId) {
   let baseDiscount = 0, gmName = '—',
       floodRisk = 0.35, foundRisk = 0.28, droughtRisk = 0.22,
       heatRisk = 0.30, pluvialRisk = 0.35, elevM = null,
-      muniMortgagePct = null, ownerOccPct = null;
+      muniMortgagePct = null, ownerOccPct = null,
+      baseLtv = BASE_LTV_MEAN;
 
   if (gm) {
     baseDiscount    = municipalDiscount(gm, sc);
@@ -269,6 +272,7 @@ function computeBuildingRisk(identificatie, bouwjaar, units, scenarioId) {
     muniMortgagePct = gm._mortgage_penetration != null
       ? Math.round(gm._mortgage_penetration * 100) : null;
     ownerOccPct     = gm._owner_occupied_pct ?? null;
+    baseLtv         = gm._base_ltv          || BASE_LTV_MEAN;
   }
 
   // Older buildings: higher vulnerability (worse foundations, lower dike compliance)
@@ -282,10 +286,11 @@ function computeBuildingRisk(identificatie, bouwjaar, units, scenarioId) {
 
   const localDiscount = Math.min(Math.max(baseDiscount + ageAdj, 0), 0.60);
   const factor        = 1 / (1 - localDiscount);
-  const stressedLTV   = Math.round(BASE_LTV_MEAN * factor * 10) / 10;
+  const stressedLTV   = Math.round(baseLtv * factor * 10) / 10;
 
   return {
     stressedLTV,
+    baseLtv,
     gmCode,
     gmName,
     floodRisk:   Math.round(floodRisk   * 100),
@@ -444,8 +449,8 @@ function computeLTVDist(scenarioId) {
 
     const d      = municipalDiscount(gm, scenario);
     const factor = 1 / (1 - d);
-    const mu     = BASE_LTV_MEAN * factor;
-    const sigma  = LTV_STD       * factor;
+    const mu     = (gm._base_ltv || BASE_LTV_MEAN) * factor;
+    const sigma  = LTV_STD * factor;
 
     for (let i = 0; i < LTV_AXIS.length; i++) {
       values[i] += weight * gaussianPDF(LTV_AXIS[i], mu, sigma);
@@ -952,6 +957,7 @@ function buildingPopupHTML(p) {
         <div style="font-size:10px;color:#475569;margin-bottom:2px">${scenLabel}</div>
         <div style="font-size:20px;font-weight:700;color:${statusColor};line-height:1.1">${ltv != null ? ltv.toFixed(1) + '%' : '—'} <span style="font-size:11px;font-weight:400">stressed LTV</span></div>
         <div style="font-size:11px;color:${statusColor};font-weight:600">${statusLabel}</div>
+        ${p.baseLtv != null ? `<div style="font-size:9.5px;color:#475569;margin-top:3px">Base LTV: <span style="color:#94a3b8">${Number(p.baseLtv).toFixed(1)}%</span> <span style="color:#334155">(CBS/DNB est.)</span></div>` : ''}
       </div>
     </div>`;
 }

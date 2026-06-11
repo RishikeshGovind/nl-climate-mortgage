@@ -16,7 +16,9 @@
     "pluvial_formula": "pluvial_risk: impervious surface × drainage capacity × terrain slope proxy",
     "foundation_source": "AHN4 NAP elevation (proxy: below-NAP = peat/clay polder) + province soil modifier (Randstad peat vs. Drenthe/Limburg sand)",
     "foundation_formula": "foundation_risk = f(elev_NAP) + province_soil_bonus; elev<-4m→0.90, -4to-2→0.82, -2to-0.5→0.73, -0.5to1→0.60, 1to3→0.44, 3to8→0.28, 8to20→0.16, >20→0.08; clamped [0.05,0.95]",
-    "mortgage_source": "CBS Woononderzoek 2022: owner-occupied (%) × 0.68 (fraction with bank mortgage)"
+    "mortgage_source": "CBS Woononderzoek 2022: owner-occupied (%) × 0.68 (fraction with bank mortgage)",
+    "base_ltv_source": "CBS Woononderzoek 2022 (WOZ, household income, median wealth, post-2000 stock%) calibrated so pop-weighted national mean = 68% (DNB 2022 average)",
+    "base_ltv_formula": "base_ltv = clamp(68 + (pi-8.521)*1.8 - (wr-0.355)*22 + (post2000-17.823)*0.18, 45, 90); pi=WOZ/hh_income, wr=median_wealth/WOZ; centering anchors are pop-weighted national means"
   },
   "province_baseline": {
     "Groningen": {
@@ -116,7 +118,8 @@
       "foundation_source": "AHN4 -0.10m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.394,
       "owner_occupied_pct": 58.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 65.2
     },
     "GM0034": {
       "flood": 0.95,
@@ -129,7 +132,8 @@
       "foundation_source": "AHN4 -3.56m NAP + Flevoland soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 71.1
     },
     "GM0599": {
       "flood": 0.793,
@@ -142,7 +146,8 @@
       "foundation_source": "AHN4 -1.13m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.238,
       "owner_occupied_pct": 35.0,
-      "social_housing_pct": 44.0
+      "social_housing_pct": 44.0,
+      "base_ltv": 73.3
     },
     "GM0687": {
       "flood": 0.617,
@@ -155,7 +160,8 @@
       "foundation_source": "AHN4 +0.63m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.415,
       "owner_occupied_pct": 61.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 63.6
     },
     "GM0994": {
       "flood": 0.05,
@@ -168,7 +174,8 @@
       "foundation_source": "AHN4 +110.16m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 60.2
     },
     "GM1931": {
       "flood": 0.87,
@@ -181,7 +188,8 @@
       "foundation_source": "AHN4 -1.90m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 64.0
     },
     "GM1901": {
       "flood": 0.793,
@@ -192,7 +200,8 @@
       "foundation_source": "AHN4 -1.13m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 64.0
     },
     "GM0513": {
       "flood": 0.72,
@@ -203,7 +212,8 @@
       "foundation_source": "AHN4 -0.40m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 65.4
     },
     "GM0014": {
       "flood": 0.36,
@@ -212,7 +222,8 @@
       "note": "Groningen — gas extraction-induced seismicity compounds clay soil foundation risk; unique hazard profile",
       "mortgage_penetration": 0.272,
       "owner_occupied_pct": 40.0,
-      "social_housing_pct": 33.0
+      "social_housing_pct": 33.0,
+      "base_ltv": 74.1
     },
     "GM0363": {
       "flood": 0.886,
@@ -225,7 +236,8 @@
       "foundation_source": "AHN4 -2.06m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.197,
       "owner_occupied_pct": 29.0,
-      "social_housing_pct": 41.0
+      "social_housing_pct": 41.0,
+      "base_ltv": 81.6
     },
     "GM0632": {
       "flood": 0.844,
@@ -236,7 +248,8 @@
       "foundation_source": "AHN4 -1.64m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 63.8
     },
     "GM0542": {
       "flood": 0.815,
@@ -247,7 +260,8 @@
       "foundation_source": "AHN4 -1.35m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 36.0
+      "social_housing_pct": 36.0,
+      "base_ltv": 66.6
     },
     "GM0479": {
       "flood": 0.792,
@@ -258,7 +272,8 @@
       "foundation_source": "AHN4 -1.12m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 37.0
+      "social_housing_pct": 37.0,
+      "base_ltv": 70.1
     },
     "GM0361": {
       "flood": 0.95,
@@ -269,7 +284,8 @@
       "foundation_source": "AHN4 -3.84m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.394,
       "owner_occupied_pct": 58.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 66.0
     },
     "GM0392": {
       "flood": 0.636,
@@ -282,7 +298,8 @@
       "foundation_source": "AHN4 +0.44m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.36,
       "owner_occupied_pct": 53.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 72.2
     },
     "GM0546": {
       "flood": 0.627,
@@ -293,7 +310,8 @@
       "foundation_source": "AHN4 +0.53m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.286,
       "owner_occupied_pct": 42.0,
-      "social_housing_pct": 33.0
+      "social_housing_pct": 33.0,
+      "base_ltv": 76.3
     },
     "GM0518": {
       "flood": 0.578,
@@ -306,7 +324,8 @@
       "foundation_source": "AHN4 +1.02m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.286,
       "owner_occupied_pct": 42.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 74.7
     },
     "GM0344": {
       "flood": 0.476,
@@ -319,7 +338,8 @@
       "foundation_source": "AHN4 +2.04m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.299,
       "owner_occupied_pct": 44.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 80.0
     },
     "GM0268": {
       "flood": 0.05,
@@ -332,7 +352,8 @@
       "foundation_source": "AHN4 +11.70m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.292,
       "owner_occupied_pct": 43.0,
-      "social_housing_pct": 39.0
+      "social_housing_pct": 39.0,
+      "base_ltv": 76.6
     },
     "GM0772": {
       "flood": 0.05,
@@ -345,7 +366,8 @@
       "foundation_source": "AHN4 +18.39m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.299,
       "owner_occupied_pct": 44.0,
-      "social_housing_pct": 37.0
+      "social_housing_pct": 37.0,
+      "base_ltv": 74.4
     },
     "GM0637": {
       "flood": 0.842,
@@ -356,7 +378,8 @@
       "foundation_source": "AHN4 -1.62m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 35.0
+      "social_housing_pct": 35.0,
+      "base_ltv": 68.6
     },
     "GM0080": {
       "flood": 0.637,
@@ -367,7 +390,8 @@
       "foundation_source": "AHN4 +0.43m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.347,
       "owner_occupied_pct": 51.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 67.1
     },
     "GM0106": {
       "flood": 0.05,
@@ -378,7 +402,8 @@
       "foundation_source": "AHN4 +11.40m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 66.8
     },
     "GM0503": {
       "flood": 0.713,
@@ -389,7 +414,8 @@
       "foundation_source": "AHN4 -0.33m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.258,
       "owner_occupied_pct": 38.0,
-      "social_housing_pct": 44.0
+      "social_housing_pct": 44.0,
+      "base_ltv": 75.3
     },
     "GM0888": {
       "flood": 0.05,
@@ -400,7 +426,8 @@
       "foundation_source": "AHN4 +108.77m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 57.0
     },
     "GM0677": {
       "flood": 0.565,
@@ -411,7 +438,8 @@
       "foundation_source": "AHN4 +1.15m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 56.0
     },
     "GM0037": {
       "flood_risk_ahn_m": 4.13,
@@ -421,7 +449,8 @@
       "foundation_source": "AHN4 +4.13m NAP + Groningen soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 64.4
     },
     "GM0047": {
       "flood_risk_ahn_m": 1.94,
@@ -431,7 +460,8 @@
       "foundation_source": "AHN4 +1.94m NAP + Groningen soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 62.9
     },
     "GM0050": {
       "flood_risk_ahn_m": 1.08,
@@ -441,7 +471,8 @@
       "foundation_source": "AHN4 +1.08m NAP + Flevoland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 71.1
     },
     "GM0059": {
       "flood_risk_ahn_m": -0.2,
@@ -451,7 +482,8 @@
       "foundation_source": "AHN4 -0.20m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 60.8
     },
     "GM0060": {
       "flood_risk_ahn_m": 2.36,
@@ -461,7 +493,8 @@
       "foundation_source": "AHN4 +2.36m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 0.0
+      "social_housing_pct": 0.0,
+      "base_ltv": 57.1
     },
     "GM0072": {
       "flood_risk_ahn_m": 0.58,
@@ -471,7 +504,8 @@
       "foundation_source": "AHN4 +0.58m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 33.0
+      "social_housing_pct": 33.0,
+      "base_ltv": 65.9
     },
     "GM0074": {
       "flood_risk_ahn_m": -1.81,
@@ -481,7 +515,8 @@
       "foundation_source": "AHN4 -1.81m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 66.5
     },
     "GM0085": {
       "flood_risk_ahn_m": 5.77,
@@ -491,7 +526,8 @@
       "foundation_source": "AHN4 +5.77m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 61.8
     },
     "GM0086": {
       "flood_risk_ahn_m": 0.39,
@@ -501,7 +537,8 @@
       "foundation_source": "AHN4 +0.39m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 62.1
     },
     "GM0088": {
       "flood_risk_ahn_m": 1.69,
@@ -511,7 +548,8 @@
       "foundation_source": "AHN4 +1.69m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.381,
       "owner_occupied_pct": 56.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 63.8
     },
     "GM0090": {
       "flood_risk_ahn_m": -0.99,
@@ -521,7 +559,8 @@
       "foundation_source": "AHN4 -0.99m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 65.5
     },
     "GM0098": {
       "flood_risk_ahn_m": 0.79,
@@ -531,7 +570,8 @@
       "foundation_source": "AHN4 +0.79m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 63.3
     },
     "GM0109": {
       "flood_risk_ahn_m": 14.29,
@@ -541,7 +581,8 @@
       "foundation_source": "AHN4 +14.29m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 62.0
     },
     "GM0114": {
       "flood_risk_ahn_m": 19.35,
@@ -551,7 +592,8 @@
       "foundation_source": "AHN4 +19.35m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.422,
       "owner_occupied_pct": 62.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 64.8
     },
     "GM0118": {
       "flood_risk_ahn_m": 11.68,
@@ -561,7 +603,8 @@
       "foundation_source": "AHN4 +11.68m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.415,
       "owner_occupied_pct": 61.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 64.4
     },
     "GM0119": {
       "flood_risk_ahn_m": 1.11,
@@ -571,7 +614,8 @@
       "foundation_source": "AHN4 +1.11m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.388,
       "owner_occupied_pct": 57.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 67.0
     },
     "GM0141": {
       "flood_risk_ahn_m": 11.08,
@@ -581,7 +625,8 @@
       "foundation_source": "AHN4 +11.08m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.367,
       "owner_occupied_pct": 54.0,
-      "social_housing_pct": 35.0
+      "social_housing_pct": 35.0,
+      "base_ltv": 67.6
     },
     "GM0147": {
       "flood_risk_ahn_m": 14.28,
@@ -591,7 +636,8 @@
       "foundation_source": "AHN4 +14.28m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 64.9
     },
     "GM0148": {
       "flood_risk_ahn_m": 2.3,
@@ -601,7 +647,8 @@
       "foundation_source": "AHN4 +2.30m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 17.0
+      "social_housing_pct": 17.0,
+      "base_ltv": 62.2
     },
     "GM0150": {
       "flood_risk_ahn_m": 6.47,
@@ -611,7 +658,8 @@
       "foundation_source": "AHN4 +6.47m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 68.5
     },
     "GM0153": {
       "flood_risk_ahn_m": 37.09,
@@ -621,7 +669,8 @@
       "foundation_source": "AHN4 +37.09m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.326,
       "owner_occupied_pct": 48.0,
-      "social_housing_pct": 37.0
+      "social_housing_pct": 37.0,
+      "base_ltv": 71.5
     },
     "GM0158": {
       "flood_risk_ahn_m": 23.59,
@@ -631,7 +680,8 @@
       "foundation_source": "AHN4 +23.59m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 62.0
     },
     "GM0160": {
       "flood_risk_ahn_m": 8.1,
@@ -641,7 +691,8 @@
       "foundation_source": "AHN4 +8.10m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 64.1
     },
     "GM0163": {
       "flood_risk_ahn_m": 7.64,
@@ -651,7 +702,8 @@
       "foundation_source": "AHN4 +7.64m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 63.8
     },
     "GM0164": {
       "flood_risk_ahn_m": 17.59,
@@ -661,7 +713,8 @@
       "foundation_source": "AHN4 +17.59m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.381,
       "owner_occupied_pct": 56.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 66.7
     },
     "GM0166": {
       "flood_risk_ahn_m": 0.18,
@@ -671,7 +724,8 @@
       "foundation_source": "AHN4 +0.18m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 67.0
     },
     "GM0168": {
       "flood_risk_ahn_m": 38.28,
@@ -681,7 +735,8 @@
       "foundation_source": "AHN4 +38.28m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 64.2
     },
     "GM0171": {
       "flood_risk_ahn_m": 0.44,
@@ -691,7 +746,8 @@
       "foundation_source": "AHN4 +0.44m NAP + Flevoland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 65.5
     },
     "GM0173": {
       "flood_risk_ahn_m": 33.48,
@@ -701,7 +757,8 @@
       "foundation_source": "AHN4 +33.48m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.422,
       "owner_occupied_pct": 62.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 65.0
     },
     "GM0175": {
       "flood_risk_ahn_m": 8.33,
@@ -711,7 +768,8 @@
       "foundation_source": "AHN4 +8.33m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 62.4
     },
     "GM0177": {
       "flood_risk_ahn_m": 3.04,
@@ -721,7 +779,8 @@
       "foundation_source": "AHN4 +3.04m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 61.6
     },
     "GM0180": {
       "flood_risk_ahn_m": 0.9,
@@ -731,7 +790,8 @@
       "foundation_source": "AHN4 +0.90m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.53,
       "owner_occupied_pct": 78.0,
-      "social_housing_pct": 11.0
+      "social_housing_pct": 11.0,
+      "base_ltv": 56.2
     },
     "GM0183": {
       "flood_risk_ahn_m": 16.5,
@@ -741,7 +801,8 @@
       "foundation_source": "AHN4 +16.50m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 12.0
+      "social_housing_pct": 12.0,
+      "base_ltv": 60.1
     },
     "GM0184": {
       "flood_risk_ahn_m": -0.9,
@@ -751,7 +812,8 @@
       "foundation_source": "AHN4 -0.90m NAP + Flevoland soil modifier",
       "mortgage_penetration": 0.53,
       "owner_occupied_pct": 78.0,
-      "social_housing_pct": 14.0
+      "social_housing_pct": 14.0,
+      "base_ltv": 63.6
     },
     "GM0189": {
       "flood_risk_ahn_m": 9.72,
@@ -761,7 +823,8 @@
       "foundation_source": "AHN4 +9.72m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 17.0
+      "social_housing_pct": 17.0,
+      "base_ltv": 61.3
     },
     "GM0193": {
       "flood_risk_ahn_m": 0.56,
@@ -773,7 +836,8 @@
       "foundation_source": "AHN4 +0.56m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.36,
       "owner_occupied_pct": 53.0,
-      "social_housing_pct": 33.0
+      "social_housing_pct": 33.0,
+      "base_ltv": 71.2
     },
     "GM0197": {
       "flood_risk_ahn_m": 22.22,
@@ -783,7 +847,8 @@
       "foundation_source": "AHN4 +22.22m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 60.7
     },
     "GM0200": {
       "flood_risk_ahn_m": 19.32,
@@ -793,7 +858,8 @@
       "foundation_source": "AHN4 +19.32m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 68.0
     },
     "GM0202": {
       "flood_risk_ahn_m": 10.45,
@@ -803,7 +869,8 @@
       "foundation_source": "AHN4 +10.45m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.292,
       "owner_occupied_pct": 43.0,
-      "social_housing_pct": 35.0
+      "social_housing_pct": 35.0,
+      "base_ltv": 73.3
     },
     "GM0203": {
       "flood_risk_ahn_m": 10.71,
@@ -813,7 +880,8 @@
       "foundation_source": "AHN4 +10.71m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 67.9
     },
     "GM0209": {
       "flood_risk_ahn_m": 7.52,
@@ -823,7 +891,8 @@
       "foundation_source": "AHN4 +7.52m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 64.1
     },
     "GM0213": {
       "flood_risk_ahn_m": 8.86,
@@ -833,7 +902,8 @@
       "foundation_source": "AHN4 +8.86m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.422,
       "owner_occupied_pct": 62.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 65.1
     },
     "GM0214": {
       "flood_risk_ahn_m": 4.09,
@@ -843,7 +913,8 @@
       "foundation_source": "AHN4 +4.09m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 64.7
     },
     "GM0216": {
       "flood_risk_ahn_m": 1.47,
@@ -853,7 +924,8 @@
       "foundation_source": "AHN4 +1.47m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 67.1
     },
     "GM0221": {
       "flood_risk_ahn_m": 9.01,
@@ -863,7 +935,8 @@
       "foundation_source": "AHN4 +9.01m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.36,
       "owner_occupied_pct": 53.0,
-      "social_housing_pct": 39.0
+      "social_housing_pct": 39.0,
+      "base_ltv": 68.6
     },
     "GM0222": {
       "flood_risk_ahn_m": 12.1,
@@ -873,7 +946,8 @@
       "foundation_source": "AHN4 +12.10m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 66.3
     },
     "GM0225": {
       "flood_risk_ahn_m": 5.69,
@@ -883,7 +957,8 @@
       "foundation_source": "AHN4 +5.69m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 66.9
     },
     "GM0226": {
       "flood_risk_ahn_m": 10.27,
@@ -893,7 +968,8 @@
       "foundation_source": "AHN4 +10.27m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 64.7
     },
     "GM0228": {
       "flood_risk_ahn_m": 31.51,
@@ -903,7 +979,8 @@
       "foundation_source": "AHN4 +31.51m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 68.6
     },
     "GM0230": {
       "flood_risk_ahn_m": 3.31,
@@ -913,7 +990,8 @@
       "foundation_source": "AHN4 +3.31m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 66.0
     },
     "GM0232": {
       "flood_risk_ahn_m": 10.52,
@@ -923,7 +1001,8 @@
       "foundation_source": "AHN4 +10.52m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 65.1
     },
     "GM0233": {
       "flood_risk_ahn_m": 13.9,
@@ -933,7 +1012,8 @@
       "foundation_source": "AHN4 +13.90m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.422,
       "owner_occupied_pct": 62.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 67.8
     },
     "GM0243": {
       "flood_risk_ahn_m": 0.18,
@@ -943,7 +1023,8 @@
       "foundation_source": "AHN4 +0.18m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 70.1
     },
     "GM0244": {
       "flood_risk_ahn_m": 1.89,
@@ -953,7 +1034,8 @@
       "foundation_source": "AHN4 +1.89m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 64.0
     },
     "GM0246": {
       "flood_risk_ahn_m": 2.97,
@@ -963,7 +1045,8 @@
       "foundation_source": "AHN4 +2.97m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 63.3
     },
     "GM0252": {
       "flood_risk_ahn_m": 9.72,
@@ -973,7 +1056,8 @@
       "foundation_source": "AHN4 +9.72m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 61.3
     },
     "GM0262": {
       "flood_risk_ahn_m": 10.1,
@@ -983,7 +1067,8 @@
       "foundation_source": "AHN4 +10.10m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 63.0
     },
     "GM0263": {
       "flood_risk_ahn_m": 2.54,
@@ -993,7 +1078,8 @@
       "foundation_source": "AHN4 +2.54m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 65.4
     },
     "GM0267": {
       "flood_risk_ahn_m": 2.63,
@@ -1003,7 +1089,8 @@
       "foundation_source": "AHN4 +2.63m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 67.2
     },
     "GM0269": {
       "flood_risk_ahn_m": 0.54,
@@ -1013,7 +1100,8 @@
       "foundation_source": "AHN4 +0.54m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 64.0
     },
     "GM0273": {
       "flood_risk_ahn_m": 4.75,
@@ -1023,7 +1111,8 @@
       "foundation_source": "AHN4 +4.75m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 66.6
     },
     "GM0274": {
       "flood_risk_ahn_m": 29.08,
@@ -1033,7 +1122,8 @@
       "foundation_source": "AHN4 +29.08m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 63.7
     },
     "GM0275": {
       "flood_risk_ahn_m": 50.55,
@@ -1043,7 +1133,8 @@
       "foundation_source": "AHN4 +50.55m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 67.2
     },
     "GM0277": {
       "flood_risk_ahn_m": 92.64,
@@ -1053,7 +1144,8 @@
       "foundation_source": "AHN4 +92.64m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.605,
       "owner_occupied_pct": 89.0,
-      "social_housing_pct": 7.0
+      "social_housing_pct": 7.0,
+      "base_ltv": 62.6
     },
     "GM0279": {
       "flood_risk_ahn_m": 5.97,
@@ -1063,7 +1155,8 @@
       "foundation_source": "AHN4 +5.97m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 64.7
     },
     "GM0281": {
       "flood_risk_ahn_m": 5.41,
@@ -1073,7 +1166,8 @@
       "foundation_source": "AHN4 +5.41m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.381,
       "owner_occupied_pct": 56.0,
-      "social_housing_pct": 35.0
+      "social_housing_pct": 35.0,
+      "base_ltv": 68.5
     },
     "GM0285": {
       "flood_risk_ahn_m": 5.49,
@@ -1083,7 +1177,8 @@
       "foundation_source": "AHN4 +5.49m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 62.1
     },
     "GM0289": {
       "flood_risk_ahn_m": 7.9,
@@ -1093,7 +1188,8 @@
       "foundation_source": "AHN4 +7.90m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.286,
       "owner_occupied_pct": 42.0,
-      "social_housing_pct": 40.0
+      "social_housing_pct": 40.0,
+      "base_ltv": 77.9
     },
     "GM0293": {
       "flood_risk_ahn_m": 10.47,
@@ -1103,7 +1199,8 @@
       "foundation_source": "AHN4 +10.47m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 66.2
     },
     "GM0294": {
       "flood_risk_ahn_m": 34.13,
@@ -1113,7 +1210,8 @@
       "foundation_source": "AHN4 +34.13m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 62.1
     },
     "GM0296": {
       "flood_risk_ahn_m": 7.61,
@@ -1123,7 +1221,8 @@
       "foundation_source": "AHN4 +7.61m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 63.9
     },
     "GM0297": {
       "flood_risk_ahn_m": 1.4,
@@ -1133,7 +1232,8 @@
       "foundation_source": "AHN4 +1.40m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 65.8
     },
     "GM0299": {
       "flood_risk_ahn_m": 10.3,
@@ -1143,7 +1243,8 @@
       "foundation_source": "AHN4 +10.30m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 65.6
     },
     "GM0301": {
       "flood_risk_ahn_m": 7.12,
@@ -1153,7 +1254,8 @@
       "foundation_source": "AHN4 +7.12m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.381,
       "owner_occupied_pct": 56.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 67.1
     },
     "GM0302": {
       "flood_risk_ahn_m": 12.12,
@@ -1163,7 +1265,8 @@
       "foundation_source": "AHN4 +12.12m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 66.5
     },
     "GM0303": {
       "flood_risk_ahn_m": 1.44,
@@ -1173,7 +1276,8 @@
       "foundation_source": "AHN4 +1.44m NAP + Flevoland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 68.3
     },
     "GM0307": {
       "flood_risk_ahn_m": 3.17,
@@ -1183,7 +1287,8 @@
       "foundation_source": "AHN4 +3.17m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.394,
       "owner_occupied_pct": 58.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 70.2
     },
     "GM0308": {
       "flood_risk_ahn_m": 7.48,
@@ -1193,7 +1298,8 @@
       "foundation_source": "AHN4 +7.48m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.415,
       "owner_occupied_pct": 61.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 65.2
     },
     "GM0310": {
       "flood_risk_ahn_m": 3.44,
@@ -1203,7 +1309,8 @@
       "foundation_source": "AHN4 +3.44m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 66.4
     },
     "GM0312": {
       "flood_risk_ahn_m": 2.49,
@@ -1213,7 +1320,8 @@
       "foundation_source": "AHN4 +2.49m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 62.3
     },
     "GM0313": {
       "flood_risk_ahn_m": -0.51,
@@ -1223,7 +1331,8 @@
       "foundation_source": "AHN4 -0.51m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 14.0
+      "social_housing_pct": 14.0,
+      "base_ltv": 65.8
     },
     "GM0317": {
       "flood_risk_ahn_m": -0.46,
@@ -1233,7 +1342,8 @@
       "foundation_source": "AHN4 -0.46m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 66.7
     },
     "GM0321": {
       "flood_risk_ahn_m": 1.82,
@@ -1243,7 +1353,8 @@
       "foundation_source": "AHN4 +1.82m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 68.4
     },
     "GM0327": {
       "flood_risk_ahn_m": 2.49,
@@ -1253,7 +1364,8 @@
       "foundation_source": "AHN4 +2.49m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 64.0
     },
     "GM0331": {
       "flood_risk_ahn_m": -0.91,
@@ -1263,7 +1375,8 @@
       "foundation_source": "AHN4 -0.91m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 62.0
     },
     "GM0335": {
       "flood_risk_ahn_m": -0.48,
@@ -1273,7 +1386,8 @@
       "foundation_source": "AHN4 -0.48m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 61.0
     },
     "GM0339": {
       "flood_risk_ahn_m": 7.08,
@@ -1283,7 +1397,8 @@
       "foundation_source": "AHN4 +7.08m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 0.0
+      "social_housing_pct": 0.0,
+      "base_ltv": 68.8
     },
     "GM0340": {
       "flood_risk_ahn_m": 41.98,
@@ -1293,7 +1408,8 @@
       "foundation_source": "AHN4 +41.98m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 66.5
     },
     "GM0342": {
       "flood_risk_ahn_m": 5.15,
@@ -1303,7 +1419,8 @@
       "foundation_source": "AHN4 +5.15m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 65.3
     },
     "GM0345": {
       "flood_risk_ahn_m": 6.47,
@@ -1313,7 +1430,8 @@
       "foundation_source": "AHN4 +6.47m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 67.8
     },
     "GM0351": {
       "flood_risk_ahn_m": 3.67,
@@ -1323,7 +1441,8 @@
       "foundation_source": "AHN4 +3.67m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 67.2
     },
     "GM0352": {
       "flood_risk_ahn_m": 3.83,
@@ -1333,7 +1452,8 @@
       "foundation_source": "AHN4 +3.83m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 64.4
     },
     "GM0353": {
       "flood_risk_ahn_m": 1.26,
@@ -1343,7 +1463,8 @@
       "foundation_source": "AHN4 +1.26m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 65.9
     },
     "GM0355": {
       "flood_risk_ahn_m": 8.27,
@@ -1353,7 +1474,8 @@
       "foundation_source": "AHN4 +8.27m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.354,
       "owner_occupied_pct": 52.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 72.0
     },
     "GM0356": {
       "flood_risk_ahn_m": 1.52,
@@ -1363,7 +1485,8 @@
       "foundation_source": "AHN4 +1.52m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 65.7
     },
     "GM0362": {
       "flood_risk_ahn_m": -4.21,
@@ -1373,7 +1496,8 @@
       "foundation_source": "AHN4 -4.21m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.32,
       "owner_occupied_pct": 47.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 76.2
     },
     "GM0373": {
       "flood_risk_ahn_m": 1.09,
@@ -1383,7 +1507,8 @@
       "foundation_source": "AHN4 +1.09m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 62.6
     },
     "GM0375": {
       "flood_risk_ahn_m": 3.17,
@@ -1393,7 +1518,8 @@
       "foundation_source": "AHN4 +3.17m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 36.0
+      "social_housing_pct": 36.0,
+      "base_ltv": 68.9
     },
     "GM0376": {
       "flood_risk_ahn_m": 0.0,
@@ -1403,7 +1529,8 @@
       "foundation_source": "AHN4 +0.00m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 72.4
     },
     "GM0377": {
       "flood_risk_ahn_m": 3.82,
@@ -1413,7 +1540,8 @@
       "foundation_source": "AHN4 +3.82m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 64.4
     },
     "GM0383": {
       "flood_risk_ahn_m": -0.94,
@@ -1423,7 +1551,8 @@
       "foundation_source": "AHN4 -0.94m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 60.3
     },
     "GM0384": {
       "flood_risk_ahn_m": 0.74,
@@ -1433,7 +1562,8 @@
       "foundation_source": "AHN4 +0.74m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.272,
       "owner_occupied_pct": 40.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 78.0
     },
     "GM0385": {
       "flood_risk_ahn_m": -2.32,
@@ -1443,7 +1573,8 @@
       "foundation_source": "AHN4 -2.32m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.524,
       "owner_occupied_pct": 77.0,
-      "social_housing_pct": 17.0
+      "social_housing_pct": 17.0,
+      "base_ltv": 57.4
     },
     "GM0388": {
       "flood_risk_ahn_m": -0.9,
@@ -1453,7 +1584,8 @@
       "foundation_source": "AHN4 -0.90m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.415,
       "owner_occupied_pct": 61.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 64.9
     },
     "GM0394": {
       "flood_risk_ahn_m": -4.35,
@@ -1463,7 +1595,8 @@
       "foundation_source": "AHN4 -4.35m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 69.0
     },
     "GM0396": {
       "flood_risk_ahn_m": 2.35,
@@ -1473,7 +1606,8 @@
       "foundation_source": "AHN4 +2.35m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 67.3
     },
     "GM0397": {
       "flood_risk_ahn_m": 5.26,
@@ -1483,7 +1617,8 @@
       "foundation_source": "AHN4 +5.26m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 65.0
     },
     "GM0399": {
       "flood_risk_ahn_m": 1.13,
@@ -1493,7 +1628,8 @@
       "foundation_source": "AHN4 +1.13m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 17.0
+      "social_housing_pct": 17.0,
+      "base_ltv": 62.8
     },
     "GM0400": {
       "flood_risk_ahn_m": 0.95,
@@ -1503,7 +1639,8 @@
       "foundation_source": "AHN4 +0.95m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.367,
       "owner_occupied_pct": 54.0,
-      "social_housing_pct": 37.0
+      "social_housing_pct": 37.0,
+      "base_ltv": 64.7
     },
     "GM0402": {
       "flood_risk_ahn_m": 3.38,
@@ -1513,7 +1650,8 @@
       "foundation_source": "AHN4 +3.38m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.367,
       "owner_occupied_pct": 54.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 70.3
     },
     "GM0405": {
       "flood_risk_ahn_m": -0.66,
@@ -1523,7 +1661,8 @@
       "foundation_source": "AHN4 -0.66m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 66.3
     },
     "GM0406": {
       "flood_risk_ahn_m": 6.24,
@@ -1533,7 +1672,8 @@
       "foundation_source": "AHN4 +6.24m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.394,
       "owner_occupied_pct": 58.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 67.3
     },
     "GM0415": {
       "flood_risk_ahn_m": -1.38,
@@ -1543,7 +1683,8 @@
       "foundation_source": "AHN4 -1.38m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 67.2
     },
     "GM0417": {
       "flood_risk_ahn_m": 6.64,
@@ -1553,7 +1694,8 @@
       "foundation_source": "AHN4 +6.64m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 17.0
+      "social_housing_pct": 17.0,
+      "base_ltv": 64.7
     },
     "GM0420": {
       "flood_risk_ahn_m": 0.19,
@@ -1563,7 +1705,8 @@
       "foundation_source": "AHN4 +0.19m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 63.0
     },
     "GM0431": {
       "flood_risk_ahn_m": -1.23,
@@ -1573,7 +1716,8 @@
       "foundation_source": "AHN4 -1.23m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 63.5
     },
     "GM0432": {
       "flood_risk_ahn_m": -0.82,
@@ -1583,7 +1727,8 @@
       "foundation_source": "AHN4 -0.82m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 2.0
+      "social_housing_pct": 2.0,
+      "base_ltv": 61.7
     },
     "GM0437": {
       "flood_risk_ahn_m": -1.62,
@@ -1593,7 +1738,8 @@
       "foundation_source": "AHN4 -1.62m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 69.2
     },
     "GM0439": {
       "flood_risk_ahn_m": -3.93,
@@ -1603,7 +1749,8 @@
       "foundation_source": "AHN4 -3.93m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 34.0
+      "social_housing_pct": 34.0,
+      "base_ltv": 68.0
     },
     "GM0441": {
       "flood_risk_ahn_m": -1.34,
@@ -1613,7 +1760,8 @@
       "foundation_source": "AHN4 -1.34m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 62.5
     },
     "GM0448": {
       "flood_risk_ahn_m": 0.98,
@@ -1623,7 +1771,8 @@
       "foundation_source": "AHN4 +0.98m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 59.8
     },
     "GM0450": {
       "flood_risk_ahn_m": -1.38,
@@ -1633,7 +1782,8 @@
       "foundation_source": "AHN4 -1.38m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 63.3
     },
     "GM0451": {
       "flood_risk_ahn_m": -1.29,
@@ -1643,7 +1793,8 @@
       "foundation_source": "AHN4 -1.29m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 68.0
     },
     "GM0453": {
       "flood_risk_ahn_m": 10.0,
@@ -1655,7 +1806,8 @@
       "foundation_source": "AHN4 +10.00m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.381,
       "owner_occupied_pct": 56.0,
-      "social_housing_pct": 36.0
+      "social_housing_pct": 36.0,
+      "base_ltv": 67.1
     },
     "GM0457": {
       "flood_risk_ahn_m": -1.51,
@@ -1665,7 +1817,8 @@
       "foundation_source": "AHN4 -1.51m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.381,
       "owner_occupied_pct": 56.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 69.1
     },
     "GM0473": {
       "flood_risk_ahn_m": 7.51,
@@ -1675,7 +1828,8 @@
       "foundation_source": "AHN4 +7.51m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.36,
       "owner_occupied_pct": 53.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 70.1
     },
     "GM0482": {
       "flood_risk_ahn_m": -1.04,
@@ -1685,7 +1839,8 @@
       "foundation_source": "AHN4 -1.04m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.415,
       "owner_occupied_pct": 61.0,
-      "social_housing_pct": 33.0
+      "social_housing_pct": 33.0,
+      "base_ltv": 66.1
     },
     "GM0484": {
       "flood_risk_ahn_m": -1.94,
@@ -1695,7 +1850,8 @@
       "foundation_source": "AHN4 -1.94m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 65.7
     },
     "GM0489": {
       "flood_risk_ahn_m": -0.46,
@@ -1705,7 +1861,8 @@
       "foundation_source": "AHN4 -0.46m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 68.9
     },
     "GM0498": {
       "flood_risk_ahn_m": -1.53,
@@ -1715,7 +1872,8 @@
       "foundation_source": "AHN4 -1.53m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 61.4
     },
     "GM0501": {
       "flood_risk_ahn_m": 0.01,
@@ -1725,7 +1883,8 @@
       "foundation_source": "AHN4 +0.01m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 64.6
     },
     "GM0502": {
       "flood_risk_ahn_m": -1.98,
@@ -1735,7 +1894,8 @@
       "foundation_source": "AHN4 -1.98m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.36,
       "owner_occupied_pct": 53.0,
-      "social_housing_pct": 36.0
+      "social_housing_pct": 36.0,
+      "base_ltv": 66.8
     },
     "GM0512": {
       "flood_risk_ahn_m": -0.17,
@@ -1745,7 +1905,8 @@
       "foundation_source": "AHN4 -0.17m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.333,
       "owner_occupied_pct": 49.0,
-      "social_housing_pct": 38.0
+      "social_housing_pct": 38.0,
+      "base_ltv": 69.1
     },
     "GM0523": {
       "flood_risk_ahn_m": -0.01,
@@ -1755,7 +1916,8 @@
       "foundation_source": "AHN4 -0.01m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 62.8
     },
     "GM0530": {
       "flood_risk_ahn_m": -0.12,
@@ -1765,7 +1927,8 @@
       "foundation_source": "AHN4 -0.12m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 65.0
     },
     "GM0531": {
       "flood_risk_ahn_m": -1.16,
@@ -1775,7 +1938,8 @@
       "foundation_source": "AHN4 -1.16m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 68.3
     },
     "GM0532": {
       "flood_risk_ahn_m": -1.3,
@@ -1785,7 +1949,8 @@
       "foundation_source": "AHN4 -1.30m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 63.3
     },
     "GM0534": {
       "flood_risk_ahn_m": 0.44,
@@ -1795,7 +1960,8 @@
       "foundation_source": "AHN4 +0.44m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 65.8
     },
     "GM0537": {
       "flood_risk_ahn_m": 0.68,
@@ -1805,7 +1971,8 @@
       "foundation_source": "AHN4 +0.68m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 66.9
     },
     "GM0547": {
       "flood_risk_ahn_m": -0.59,
@@ -1815,7 +1982,8 @@
       "foundation_source": "AHN4 -0.59m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 64.3
     },
     "GM0553": {
       "flood_risk_ahn_m": -0.06,
@@ -1825,7 +1993,8 @@
       "foundation_source": "AHN4 -0.06m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 66.3
     },
     "GM0556": {
       "flood_risk_ahn_m": 4.01,
@@ -1835,7 +2004,8 @@
       "foundation_source": "AHN4 +4.01m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.36,
       "owner_occupied_pct": 53.0,
-      "social_housing_pct": 41.0
+      "social_housing_pct": 41.0,
+      "base_ltv": 68.3
     },
     "GM0569": {
       "flood_risk_ahn_m": -5.17,
@@ -1845,7 +2015,8 @@
       "foundation_source": "AHN4 -5.17m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 63.7
     },
     "GM0575": {
       "flood_risk_ahn_m": -0.07,
@@ -1855,7 +2026,8 @@
       "foundation_source": "AHN4 -0.07m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 69.3
     },
     "GM0579": {
       "flood_risk_ahn_m": 0.29,
@@ -1865,7 +2037,8 @@
       "foundation_source": "AHN4 +0.29m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 66.1
     },
     "GM0589": {
       "flood_risk_ahn_m": -0.87,
@@ -1875,7 +2048,8 @@
       "foundation_source": "AHN4 -0.87m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 61.9
     },
     "GM0590": {
       "flood_risk_ahn_m": -0.62,
@@ -1885,7 +2059,8 @@
       "foundation_source": "AHN4 -0.62m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 64.0
     },
     "GM0597": {
       "flood_risk_ahn_m": -1.04,
@@ -1895,7 +2070,8 @@
       "foundation_source": "AHN4 -1.04m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.388,
       "owner_occupied_pct": 57.0,
-      "social_housing_pct": 39.0
+      "social_housing_pct": 39.0,
+      "base_ltv": 67.0
     },
     "GM0603": {
       "flood_risk_ahn_m": 0.27,
@@ -1905,7 +2081,8 @@
       "foundation_source": "AHN4 +0.27m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.333,
       "owner_occupied_pct": 49.0,
-      "social_housing_pct": 33.0
+      "social_housing_pct": 33.0,
+      "base_ltv": 68.7
     },
     "GM0606": {
       "flood_risk_ahn_m": -1.18,
@@ -1915,7 +2092,8 @@
       "foundation_source": "AHN4 -1.18m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.333,
       "owner_occupied_pct": 49.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 68.5
     },
     "GM0610": {
       "flood_risk_ahn_m": -1.67,
@@ -1925,7 +2103,8 @@
       "foundation_source": "AHN4 -1.67m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.388,
       "owner_occupied_pct": 57.0,
-      "social_housing_pct": 35.0
+      "social_housing_pct": 35.0,
+      "base_ltv": 65.9
     },
     "GM0613": {
       "flood_risk_ahn_m": -0.89,
@@ -1935,7 +2114,8 @@
       "foundation_source": "AHN4 -0.89m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 68.5
     },
     "GM0614": {
       "flood_risk_ahn_m": 0.94,
@@ -1945,7 +2125,8 @@
       "foundation_source": "AHN4 +0.94m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 6.0
+      "social_housing_pct": 6.0,
+      "base_ltv": 65.1
     },
     "GM0622": {
       "flood_risk_ahn_m": -0.09,
@@ -1955,7 +2136,8 @@
       "foundation_source": "AHN4 -0.09m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.32,
       "owner_occupied_pct": 47.0,
-      "social_housing_pct": 43.0
+      "social_housing_pct": 43.0,
+      "base_ltv": 68.1
     },
     "GM0626": {
       "flood_risk_ahn_m": 0.19,
@@ -1965,7 +2147,8 @@
       "foundation_source": "AHN4 +0.19m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 64.3
     },
     "GM0627": {
       "flood_risk_ahn_m": -1.77,
@@ -1975,7 +2158,8 @@
       "foundation_source": "AHN4 -1.77m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 66.1
     },
     "GM0629": {
       "flood_risk_ahn_m": 2.57,
@@ -1985,7 +2169,8 @@
       "foundation_source": "AHN4 +2.57m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.388,
       "owner_occupied_pct": 57.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 71.6
     },
     "GM0638": {
       "flood_risk_ahn_m": -1.77,
@@ -1995,7 +2180,8 @@
       "foundation_source": "AHN4 -1.77m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 17.0
+      "social_housing_pct": 17.0,
+      "base_ltv": 62.7
     },
     "GM0642": {
       "flood_risk_ahn_m": -0.93,
@@ -2005,7 +2191,8 @@
       "foundation_source": "AHN4 -0.93m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.388,
       "owner_occupied_pct": 57.0,
-      "social_housing_pct": 37.0
+      "social_housing_pct": 37.0,
+      "base_ltv": 65.0
     },
     "GM0654": {
       "flood_risk_ahn_m": 0.99,
@@ -2015,7 +2202,8 @@
       "foundation_source": "AHN4 +0.99m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 58.7
     },
     "GM0664": {
       "flood_risk_ahn_m": 0.44,
@@ -2025,7 +2213,8 @@
       "foundation_source": "AHN4 +0.44m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 65.2
     },
     "GM0668": {
       "flood_risk_ahn_m": 4.76,
@@ -2035,7 +2224,8 @@
       "foundation_source": "AHN4 +4.76m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 62.6
     },
     "GM0678": {
       "flood_risk_ahn_m": 0.58,
@@ -2045,7 +2235,8 @@
       "foundation_source": "AHN4 +0.58m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.517,
       "owner_occupied_pct": 76.0,
-      "social_housing_pct": 14.0
+      "social_housing_pct": 14.0,
+      "base_ltv": 60.4
     },
     "GM0703": {
       "flood_risk_ahn_m": -0.16,
@@ -2055,7 +2246,8 @@
       "foundation_source": "AHN4 -0.16m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 62.7
     },
     "GM0715": {
       "flood_risk_ahn_m": 0.9,
@@ -2065,7 +2257,8 @@
       "foundation_source": "AHN4 +0.90m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 58.6
     },
     "GM0716": {
       "flood_risk_ahn_m": -0.8,
@@ -2075,7 +2268,8 @@
       "foundation_source": "AHN4 -0.80m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 61.7
     },
     "GM0717": {
       "flood_risk_ahn_m": 0.7,
@@ -2085,7 +2279,8 @@
       "foundation_source": "AHN4 +0.70m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.53,
       "owner_occupied_pct": 78.0,
-      "social_housing_pct": 11.0
+      "social_housing_pct": 11.0,
+      "base_ltv": 57.3
     },
     "GM0718": {
       "flood_risk_ahn_m": 5.11,
@@ -2095,7 +2290,8 @@
       "foundation_source": "AHN4 +5.11m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.381,
       "owner_occupied_pct": 56.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 65.4
     },
     "GM0736": {
       "flood_risk_ahn_m": -6.24,
@@ -2105,7 +2301,8 @@
       "foundation_source": "AHN4 -6.24m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 64.7
     },
     "GM0737": {
       "flood_risk_ahn_m": -0.09,
@@ -2115,7 +2312,8 @@
       "foundation_source": "AHN4 -0.09m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 59.4
     },
     "GM0743": {
       "flood_risk_ahn_m": 25.03,
@@ -2125,7 +2323,8 @@
       "foundation_source": "AHN4 +25.03m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 64.8
     },
     "GM0744": {
       "flood_risk_ahn_m": 17.44,
@@ -2135,7 +2334,8 @@
       "foundation_source": "AHN4 +17.44m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 11.0
+      "social_housing_pct": 11.0,
+      "base_ltv": 63.4
     },
     "GM0748": {
       "flood_risk_ahn_m": 4.86,
@@ -2145,7 +2345,8 @@
       "foundation_source": "AHN4 +4.86m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 66.4
     },
     "GM0753": {
       "flood_risk_ahn_m": 15.0,
@@ -2155,7 +2356,8 @@
       "foundation_source": "AHN4 +15.00m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 65.1
     },
     "GM0755": {
       "flood_risk_ahn_m": 17.15,
@@ -2165,7 +2367,8 @@
       "foundation_source": "AHN4 +17.15m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 60.1
     },
     "GM0757": {
       "flood_risk_ahn_m": 7.22,
@@ -2175,7 +2378,8 @@
       "foundation_source": "AHN4 +7.22m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.422,
       "owner_occupied_pct": 62.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 65.1
     },
     "GM0758": {
       "flood_risk_ahn_m": 2.51,
@@ -2187,7 +2391,8 @@
       "foundation_source": "AHN4 +2.51m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 71.1
     },
     "GM0762": {
       "flood_risk_ahn_m": 26.21,
@@ -2197,7 +2402,8 @@
       "foundation_source": "AHN4 +26.21m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 64.2
     },
     "GM0765": {
       "flood_risk_ahn_m": 2.15,
@@ -2207,7 +2413,8 @@
       "foundation_source": "AHN4 +2.15m NAP + Groningen soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 62.4
     },
     "GM0766": {
       "flood_risk_ahn_m": 3.19,
@@ -2217,7 +2424,8 @@
       "foundation_source": "AHN4 +3.19m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 64.0
     },
     "GM0770": {
       "flood_risk_ahn_m": 26.05,
@@ -2227,7 +2435,8 @@
       "foundation_source": "AHN4 +26.05m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 17.0
+      "social_housing_pct": 17.0,
+      "base_ltv": 59.9
     },
     "GM0777": {
       "flood_risk_ahn_m": 4.4,
@@ -2237,7 +2446,8 @@
       "foundation_source": "AHN4 +4.40m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 67.2
     },
     "GM0779": {
       "flood_risk_ahn_m": 1.2,
@@ -2247,7 +2457,8 @@
       "foundation_source": "AHN4 +1.20m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 65.0
     },
     "GM0784": {
       "flood_risk_ahn_m": 12.52,
@@ -2257,7 +2468,8 @@
       "foundation_source": "AHN4 +12.52m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 66.0
     },
     "GM0785": {
       "flood_risk_ahn_m": 17.22,
@@ -2267,7 +2479,8 @@
       "foundation_source": "AHN4 +17.22m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 64.4
     },
     "GM0794": {
       "flood_risk_ahn_m": 17.93,
@@ -2277,7 +2490,8 @@
       "foundation_source": "AHN4 +17.93m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.367,
       "owner_occupied_pct": 54.0,
-      "social_housing_pct": 37.0
+      "social_housing_pct": 37.0,
+      "base_ltv": 70.6
     },
     "GM0796": {
       "flood_risk_ahn_m": 4.79,
@@ -2287,7 +2501,8 @@
       "foundation_source": "AHN4 +4.79m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.354,
       "owner_occupied_pct": 52.0,
-      "social_housing_pct": 33.0
+      "social_housing_pct": 33.0,
+      "base_ltv": 72.1
     },
     "GM0797": {
       "flood_risk_ahn_m": 2.47,
@@ -2297,7 +2512,8 @@
       "foundation_source": "AHN4 +2.47m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 65.0
     },
     "GM0798": {
       "flood_risk_ahn_m": 13.67,
@@ -2307,7 +2523,8 @@
       "foundation_source": "AHN4 +13.67m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 14.0
+      "social_housing_pct": 14.0,
+      "base_ltv": 60.4
     },
     "GM0809": {
       "flood_risk_ahn_m": 10.07,
@@ -2317,7 +2534,8 @@
       "foundation_source": "AHN4 +10.07m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 65.2
     },
     "GM0820": {
       "flood_risk_ahn_m": 14.71,
@@ -2327,7 +2545,8 @@
       "foundation_source": "AHN4 +14.71m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 61.2
     },
     "GM0823": {
       "flood_risk_ahn_m": 17.12,
@@ -2337,7 +2556,8 @@
       "foundation_source": "AHN4 +17.12m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.517,
       "owner_occupied_pct": 76.0,
-      "social_housing_pct": 13.0
+      "social_housing_pct": 13.0,
+      "base_ltv": 60.7
     },
     "GM0824": {
       "flood_risk_ahn_m": 9.24,
@@ -2347,7 +2567,8 @@
       "foundation_source": "AHN4 +9.24m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 64.7
     },
     "GM0826": {
       "flood_risk_ahn_m": 5.67,
@@ -2357,7 +2578,8 @@
       "foundation_source": "AHN4 +5.67m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.415,
       "owner_occupied_pct": 61.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 67.1
     },
     "GM0828": {
       "flood_risk_ahn_m": 6.14,
@@ -2367,7 +2589,8 @@
       "foundation_source": "AHN4 +6.14m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 66.2
     },
     "GM0840": {
       "flood_risk_ahn_m": 10.97,
@@ -2377,7 +2600,8 @@
       "foundation_source": "AHN4 +10.97m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 64.0
     },
     "GM0845": {
       "flood_risk_ahn_m": 5.68,
@@ -2387,7 +2611,8 @@
       "foundation_source": "AHN4 +5.68m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 61.5
     },
     "GM0847": {
       "flood_risk_ahn_m": 24.28,
@@ -2397,7 +2622,8 @@
       "foundation_source": "AHN4 +24.28m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 63.0
     },
     "GM0848": {
       "flood_risk_ahn_m": 14.92,
@@ -2407,7 +2633,8 @@
       "foundation_source": "AHN4 +14.92m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 64.8
     },
     "GM0851": {
       "flood_risk_ahn_m": 1.2,
@@ -2417,7 +2644,8 @@
       "foundation_source": "AHN4 +1.20m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 64.7
     },
     "GM0855": {
       "flood_risk_ahn_m": 13.71,
@@ -2429,7 +2657,8 @@
       "foundation_source": "AHN4 +13.71m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.34,
       "owner_occupied_pct": 50.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 72.9
     },
     "GM0858": {
       "flood_risk_ahn_m": 25.42,
@@ -2439,7 +2668,8 @@
       "foundation_source": "AHN4 +25.42m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.408,
       "owner_occupied_pct": 60.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 67.1
     },
     "GM0861": {
       "flood_risk_ahn_m": 23.18,
@@ -2449,7 +2679,8 @@
       "foundation_source": "AHN4 +23.18m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 65.6
     },
     "GM0865": {
       "flood_risk_ahn_m": 6.03,
@@ -2459,7 +2690,8 @@
       "foundation_source": "AHN4 +6.03m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 65.8
     },
     "GM0866": {
       "flood_risk_ahn_m": 21.98,
@@ -2469,7 +2701,8 @@
       "foundation_source": "AHN4 +21.98m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 61.3
     },
     "GM0867": {
       "flood_risk_ahn_m": 0.92,
@@ -2479,7 +2712,8 @@
       "foundation_source": "AHN4 +0.92m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.415,
       "owner_occupied_pct": 61.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 67.6
     },
     "GM0873": {
       "flood_risk_ahn_m": 19.43,
@@ -2489,7 +2723,8 @@
       "foundation_source": "AHN4 +19.43m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 62.5
     },
     "GM0879": {
       "flood_risk_ahn_m": 9.92,
@@ -2499,7 +2734,8 @@
       "foundation_source": "AHN4 +9.92m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 13.0
+      "social_housing_pct": 13.0,
+      "base_ltv": 59.5
     },
     "GM0880": {
       "flood_risk_ahn_m": -1.38,
@@ -2509,7 +2745,8 @@
       "foundation_source": "AHN4 -1.38m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 64.7
     },
     "GM0882": {
       "flood_risk_ahn_m": 160.1,
@@ -2519,7 +2756,8 @@
       "foundation_source": "AHN4 +160.10m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 62.9
     },
     "GM0889": {
       "flood_risk_ahn_m": 23.76,
@@ -2529,7 +2767,8 @@
       "foundation_source": "AHN4 +23.76m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 62.4
     },
     "GM0893": {
       "flood_risk_ahn_m": 16.23,
@@ -2539,7 +2778,8 @@
       "foundation_source": "AHN4 +16.23m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 61.9
     },
     "GM0899": {
       "flood_risk_ahn_m": 89.42,
@@ -2549,7 +2789,8 @@
       "foundation_source": "AHN4 +89.42m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.415,
       "owner_occupied_pct": 61.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 63.6
     },
     "GM0907": {
       "flood_risk_ahn_m": 12.67,
@@ -2559,7 +2800,8 @@
       "foundation_source": "AHN4 +12.67m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 63.5
     },
     "GM0917": {
       "flood_risk_ahn_m": 115.9,
@@ -2569,7 +2811,8 @@
       "foundation_source": "AHN4 +115.90m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.32,
       "owner_occupied_pct": 47.0,
-      "social_housing_pct": 36.0
+      "social_housing_pct": 36.0,
+      "base_ltv": 66.0
     },
     "GM0928": {
       "flood_risk_ahn_m": 107.08,
@@ -2579,7 +2822,8 @@
       "foundation_source": "AHN4 +107.08m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.36,
       "owner_occupied_pct": 53.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 65.0
     },
     "GM0935": {
       "flood_risk_ahn_m": 45.78,
@@ -2591,7 +2835,8 @@
       "foundation_source": "AHN4 +45.78m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.265,
       "owner_occupied_pct": 39.0,
-      "social_housing_pct": 35.0
+      "social_housing_pct": 35.0,
+      "base_ltv": 72.2
     },
     "GM0938": {
       "flood_risk_ahn_m": 110.33,
@@ -2601,7 +2846,8 @@
       "foundation_source": "AHN4 +110.33m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 58.2
     },
     "GM0944": {
       "flood_risk_ahn_m": 47.2,
@@ -2611,7 +2857,8 @@
       "foundation_source": "AHN4 +47.20m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 59.9
     },
     "GM0946": {
       "flood_risk_ahn_m": 32.16,
@@ -2621,7 +2868,8 @@
       "foundation_source": "AHN4 +32.16m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 61.8
     },
     "GM0957": {
       "flood_risk_ahn_m": 24.55,
@@ -2631,7 +2879,8 @@
       "foundation_source": "AHN4 +24.55m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.374,
       "owner_occupied_pct": 55.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 67.4
     },
     "GM0965": {
       "flood_risk_ahn_m": 153.08,
@@ -2641,7 +2890,8 @@
       "foundation_source": "AHN4 +153.08m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 58.9
     },
     "GM0971": {
       "flood_risk_ahn_m": 57.73,
@@ -2651,7 +2901,8 @@
       "foundation_source": "AHN4 +57.73m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 58.4
     },
     "GM0981": {
       "flood_risk_ahn_m": 254.08,
@@ -2661,7 +2912,8 @@
       "foundation_source": "AHN4 +254.08m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.299,
       "owner_occupied_pct": 44.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 63.7
     },
     "GM0983": {
       "flood_risk_ahn_m": 22.08,
@@ -2671,7 +2923,8 @@
       "foundation_source": "AHN4 +22.08m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.401,
       "owner_occupied_pct": 59.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 66.4
     },
     "GM0984": {
       "flood_risk_ahn_m": 20.97,
@@ -2681,7 +2934,8 @@
       "foundation_source": "AHN4 +20.97m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 64.6
     },
     "GM0986": {
       "flood_risk_ahn_m": 137.75,
@@ -2691,7 +2945,8 @@
       "foundation_source": "AHN4 +137.75m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 58.6
     },
     "GM0988": {
       "flood_risk_ahn_m": 31.37,
@@ -2701,7 +2956,8 @@
       "foundation_source": "AHN4 +31.37m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 63.6
     },
     "GM0995": {
       "flood_risk_ahn_m": 2.93,
@@ -2711,7 +2967,8 @@
       "foundation_source": "AHN4 +2.93m NAP + Flevoland soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 68.6
     },
     "GM1507": {
       "flood_risk_ahn_m": 23.2,
@@ -2721,7 +2978,8 @@
       "foundation_source": "AHN4 +23.20m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.517,
       "owner_occupied_pct": 76.0,
-      "social_housing_pct": 15.0
+      "social_housing_pct": 15.0,
+      "base_ltv": 59.6
     },
     "GM1509": {
       "flood_risk_ahn_m": 14.74,
@@ -2731,7 +2989,8 @@
       "foundation_source": "AHN4 +14.74m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 62.8
     },
     "GM1525": {
       "flood_risk_ahn_m": -0.16,
@@ -2741,7 +3000,8 @@
       "foundation_source": "AHN4 -0.16m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 66.6
     },
     "GM1581": {
       "flood_risk_ahn_m": 33.31,
@@ -2751,7 +3011,8 @@
       "foundation_source": "AHN4 +33.31m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 65.0
     },
     "GM1586": {
       "flood_risk_ahn_m": 19.44,
@@ -2761,7 +3022,8 @@
       "foundation_source": "AHN4 +19.44m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 15.0
+      "social_housing_pct": 15.0,
+      "base_ltv": 59.3
     },
     "GM1598": {
       "flood_risk_ahn_m": -2.2,
@@ -2771,7 +3033,8 @@
       "foundation_source": "AHN4 -2.20m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.53,
       "owner_occupied_pct": 78.0,
-      "social_housing_pct": 6.0
+      "social_housing_pct": 6.0,
+      "base_ltv": 60.5
     },
     "GM1621": {
       "flood_risk_ahn_m": -4.7,
@@ -2781,7 +3044,8 @@
       "foundation_source": "AHN4 -4.70m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 68.2
     },
     "GM1640": {
       "flood_risk_ahn_m": 27.25,
@@ -2791,7 +3055,8 @@
       "foundation_source": "AHN4 +27.25m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.53,
       "owner_occupied_pct": 78.0,
-      "social_housing_pct": 13.0
+      "social_housing_pct": 13.0,
+      "base_ltv": 57.2
     },
     "GM1641": {
       "flood_risk_ahn_m": 23.91,
@@ -2801,7 +3066,8 @@
       "foundation_source": "AHN4 +23.91m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 57.1
     },
     "GM1652": {
       "flood_risk_ahn_m": 21.04,
@@ -2811,7 +3077,8 @@
       "foundation_source": "AHN4 +21.04m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 66.3
     },
     "GM1655": {
       "flood_risk_ahn_m": 3.28,
@@ -2821,7 +3088,8 @@
       "foundation_source": "AHN4 +3.28m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 64.1
     },
     "GM1658": {
       "flood_risk_ahn_m": 24.69,
@@ -2831,7 +3099,8 @@
       "foundation_source": "AHN4 +24.69m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.524,
       "owner_occupied_pct": 77.0,
-      "social_housing_pct": 15.0
+      "social_housing_pct": 15.0,
+      "base_ltv": 61.8
     },
     "GM1659": {
       "flood_risk_ahn_m": 16.09,
@@ -2841,7 +3110,8 @@
       "foundation_source": "AHN4 +16.09m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 63.7
     },
     "GM1667": {
       "flood_risk_ahn_m": 29.55,
@@ -2851,7 +3121,8 @@
       "foundation_source": "AHN4 +29.55m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.524,
       "owner_occupied_pct": 77.0,
-      "social_housing_pct": 13.0
+      "social_housing_pct": 13.0,
+      "base_ltv": 59.1
     },
     "GM1669": {
       "flood_risk_ahn_m": 25.2,
@@ -2861,7 +3132,8 @@
       "foundation_source": "AHN4 +25.20m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 17.0
+      "social_housing_pct": 17.0,
+      "base_ltv": 58.1
     },
     "GM1674": {
       "flood_risk_ahn_m": 2.86,
@@ -2871,7 +3143,8 @@
       "foundation_source": "AHN4 +2.86m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.422,
       "owner_occupied_pct": 62.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 65.1
     },
     "GM1676": {
       "flood_risk_ahn_m": 0.37,
@@ -2881,7 +3154,8 @@
       "foundation_source": "AHN4 +0.37m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 62.4
     },
     "GM1680": {
       "flood_risk_ahn_m": 12.54,
@@ -2891,7 +3165,8 @@
       "foundation_source": "AHN4 +12.54m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 59.3
     },
     "GM1681": {
       "flood_risk_ahn_m": 8.4,
@@ -2901,7 +3176,8 @@
       "foundation_source": "AHN4 +8.40m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 62.0
     },
     "GM1690": {
       "flood_risk_ahn_m": 4.76,
@@ -2911,7 +3187,8 @@
       "foundation_source": "AHN4 +4.76m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 58.8
     },
     "GM1695": {
       "flood_risk_ahn_m": 0.8,
@@ -2921,7 +3198,8 @@
       "foundation_source": "AHN4 +0.80m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 14.0
+      "social_housing_pct": 14.0,
+      "base_ltv": 61.0
     },
     "GM1696": {
       "flood_risk_ahn_m": -1.11,
@@ -2931,7 +3209,8 @@
       "foundation_source": "AHN4 -1.11m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 65.4
     },
     "GM1699": {
       "flood_risk_ahn_m": 4.47,
@@ -2941,7 +3220,8 @@
       "foundation_source": "AHN4 +4.47m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 59.7
     },
     "GM1700": {
       "flood_risk_ahn_m": 8.17,
@@ -2951,7 +3231,8 @@
       "foundation_source": "AHN4 +8.17m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 63.8
     },
     "GM1701": {
       "flood_risk_ahn_m": 5.96,
@@ -2961,7 +3242,8 @@
       "foundation_source": "AHN4 +5.96m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 60.3
     },
     "GM1705": {
       "flood_risk_ahn_m": 9.31,
@@ -2971,7 +3253,8 @@
       "foundation_source": "AHN4 +9.31m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 64.7
     },
     "GM1706": {
       "flood_risk_ahn_m": 28.29,
@@ -2981,7 +3264,8 @@
       "foundation_source": "AHN4 +28.29m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 17.0
+      "social_housing_pct": 17.0,
+      "base_ltv": 59.7
     },
     "GM1708": {
       "flood_risk_ahn_m": -2.01,
@@ -2991,7 +3275,8 @@
       "foundation_source": "AHN4 -2.01m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 64.5
     },
     "GM1709": {
       "flood_risk_ahn_m": 1.51,
@@ -3001,7 +3286,8 @@
       "foundation_source": "AHN4 +1.51m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 63.9
     },
     "GM1711": {
       "flood_risk_ahn_m": 33.38,
@@ -3011,7 +3297,8 @@
       "foundation_source": "AHN4 +33.38m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 58.8
     },
     "GM1714": {
       "flood_risk_ahn_m": 1.26,
@@ -3021,7 +3308,8 @@
       "foundation_source": "AHN4 +1.26m NAP + Zeeland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 16.0
+      "social_housing_pct": 16.0,
+      "base_ltv": 57.4
     },
     "GM1719": {
       "flood_risk_ahn_m": -0.87,
@@ -3031,7 +3319,8 @@
       "foundation_source": "AHN4 -0.87m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 61.2
     },
     "GM1721": {
       "flood_risk_ahn_m": 6.82,
@@ -3041,7 +3330,8 @@
       "foundation_source": "AHN4 +6.82m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 62.3
     },
     "GM1723": {
       "flood_risk_ahn_m": 12.7,
@@ -3051,7 +3341,8 @@
       "foundation_source": "AHN4 +12.70m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.51,
       "owner_occupied_pct": 75.0,
-      "social_housing_pct": 13.0
+      "social_housing_pct": 13.0,
+      "base_ltv": 61.0
     },
     "GM1724": {
       "flood_risk_ahn_m": 30.65,
@@ -3061,7 +3352,8 @@
       "foundation_source": "AHN4 +30.65m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.53,
       "owner_occupied_pct": 78.0,
-      "social_housing_pct": 13.0
+      "social_housing_pct": 13.0,
+      "base_ltv": 59.4
     },
     "GM1728": {
       "flood_risk_ahn_m": 25.72,
@@ -3071,7 +3363,8 @@
       "foundation_source": "AHN4 +25.72m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 15.0
+      "social_housing_pct": 15.0,
+      "base_ltv": 61.3
     },
     "GM1729": {
       "flood_risk_ahn_m": 184.16,
@@ -3081,7 +3374,8 @@
       "foundation_source": "AHN4 +184.16m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 58.4
     },
     "GM1730": {
       "flood_risk_ahn_m": 4.0,
@@ -3091,7 +3385,8 @@
       "foundation_source": "AHN4 +4.00m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.524,
       "owner_occupied_pct": 77.0,
-      "social_housing_pct": 15.0
+      "social_housing_pct": 15.0,
+      "base_ltv": 60.4
     },
     "GM1731": {
       "flood_risk_ahn_m": 13.02,
@@ -3101,7 +3396,8 @@
       "foundation_source": "AHN4 +13.02m NAP + Drenthe soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 61.5
     },
     "GM1734": {
       "flood_risk_ahn_m": 7.21,
@@ -3111,7 +3407,8 @@
       "foundation_source": "AHN4 +7.21m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 65.9
     },
     "GM1735": {
       "flood_risk_ahn_m": 12.54,
@@ -3121,7 +3418,8 @@
       "foundation_source": "AHN4 +12.54m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 62.9
     },
     "GM1740": {
       "flood_risk_ahn_m": 5.98,
@@ -3131,7 +3429,8 @@
       "foundation_source": "AHN4 +5.98m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 65.9
     },
     "GM1742": {
       "flood_risk_ahn_m": 19.12,
@@ -3141,7 +3440,8 @@
       "foundation_source": "AHN4 +19.12m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 62.8
     },
     "GM1771": {
       "flood_risk_ahn_m": 21.94,
@@ -3151,7 +3451,8 @@
       "foundation_source": "AHN4 +21.94m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 65.0
     },
     "GM1773": {
       "flood_risk_ahn_m": 2.03,
@@ -3161,7 +3462,8 @@
       "foundation_source": "AHN4 +2.03m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 63.2
     },
     "GM1774": {
       "flood_risk_ahn_m": 23.65,
@@ -3171,7 +3473,8 @@
       "foundation_source": "AHN4 +23.65m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 13.0
+      "social_housing_pct": 13.0,
+      "base_ltv": 59.1
     },
     "GM1783": {
       "flood_risk_ahn_m": -0.95,
@@ -3183,7 +3486,8 @@
       "foundation_source": "AHN4 -0.95m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 67.3
     },
     "GM1842": {
       "flood_risk_ahn_m": -1.6,
@@ -3193,7 +3497,8 @@
       "foundation_source": "AHN4 -1.60m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 63.3
     },
     "GM1859": {
       "flood_risk_ahn_m": 17.13,
@@ -3203,7 +3508,8 @@
       "foundation_source": "AHN4 +17.13m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 62.4
     },
     "GM1876": {
       "flood_risk_ahn_m": 13.64,
@@ -3213,7 +3519,8 @@
       "foundation_source": "AHN4 +13.64m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.483,
       "owner_occupied_pct": 71.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 58.4
     },
     "GM1883": {
       "flood_risk_ahn_m": 52.49,
@@ -3223,7 +3530,8 @@
       "foundation_source": "AHN4 +52.49m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.394,
       "owner_occupied_pct": 58.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 63.6
     },
     "GM1884": {
       "flood_risk_ahn_m": -2.61,
@@ -3233,7 +3541,8 @@
       "foundation_source": "AHN4 -2.61m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 65.5
     },
     "GM1891": {
       "flood_risk_ahn_m": 1.13,
@@ -3243,7 +3552,8 @@
       "foundation_source": "AHN4 +1.13m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 59.5
     },
     "GM1892": {
       "flood_risk_ahn_m": -5.6,
@@ -3253,7 +3563,8 @@
       "foundation_source": "AHN4 -5.60m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 65.4
     },
     "GM1894": {
       "flood_risk_ahn_m": 27.76,
@@ -3263,7 +3574,8 @@
       "foundation_source": "AHN4 +27.76m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 61.0
     },
     "GM1896": {
       "flood_risk_ahn_m": -0.57,
@@ -3273,7 +3585,8 @@
       "foundation_source": "AHN4 -0.57m NAP + Overijssel soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 61.1
     },
     "GM1900": {
       "flood_risk_ahn_m": 0.38,
@@ -3283,7 +3596,8 @@
       "foundation_source": "AHN4 +0.38m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 62.9
     },
     "GM1903": {
       "flood_risk_ahn_m": 140.94,
@@ -3293,7 +3607,8 @@
       "foundation_source": "AHN4 +140.94m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.517,
       "owner_occupied_pct": 76.0,
-      "social_housing_pct": 10.0
+      "social_housing_pct": 10.0,
+      "base_ltv": 57.9
     },
     "GM1904": {
       "flood_risk_ahn_m": 0.42,
@@ -3303,7 +3618,8 @@
       "foundation_source": "AHN4 +0.42m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 65.0
     },
     "GM1911": {
       "flood_risk_ahn_m": -2.44,
@@ -3313,7 +3629,8 @@
       "foundation_source": "AHN4 -2.44m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 63.4
     },
     "GM1916": {
       "flood_risk_ahn_m": 0.17,
@@ -3323,7 +3640,8 @@
       "foundation_source": "AHN4 +0.17m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.394,
       "owner_occupied_pct": 58.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 66.0
     },
     "GM1924": {
       "flood_risk_ahn_m": 0.86,
@@ -3333,7 +3651,8 @@
       "foundation_source": "AHN4 +0.86m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 64.7
     },
     "GM1926": {
       "flood_risk_ahn_m": -2.11,
@@ -3343,7 +3662,8 @@
       "foundation_source": "AHN4 -2.11m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 69.3
     },
     "GM1930": {
       "flood_risk_ahn_m": -1.91,
@@ -3353,7 +3673,8 @@
       "foundation_source": "AHN4 -1.91m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.394,
       "owner_occupied_pct": 58.0,
-      "social_housing_pct": 37.0
+      "social_housing_pct": 37.0,
+      "base_ltv": 65.4
     },
     "GM1940": {
       "flood_risk_ahn_m": -1.08,
@@ -3363,7 +3684,8 @@
       "foundation_source": "AHN4 -1.08m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 61.7
     },
     "GM1942": {
       "flood_risk_ahn_m": 0.13,
@@ -3373,7 +3695,8 @@
       "foundation_source": "AHN4 +0.13m NAP + Noord-Holland soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 65.7
     },
     "GM1945": {
       "flood_risk_ahn_m": 30.39,
@@ -3383,7 +3706,8 @@
       "foundation_source": "AHN4 +30.39m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.415,
       "owner_occupied_pct": 61.0,
-      "social_housing_pct": 29.0
+      "social_housing_pct": 29.0,
+      "base_ltv": 66.5
     },
     "GM1948": {
       "flood_risk_ahn_m": 9.78,
@@ -3393,7 +3717,8 @@
       "foundation_source": "AHN4 +9.78m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 64.2
     },
     "GM1949": {
       "flood_risk_ahn_m": -0.16,
@@ -3403,7 +3728,8 @@
       "foundation_source": "AHN4 -0.16m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 60.8
     },
     "GM1950": {
       "flood_risk_ahn_m": 2.45,
@@ -3413,7 +3739,8 @@
       "foundation_source": "AHN4 +2.45m NAP + Groningen soil modifier",
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 22.0
+      "social_housing_pct": 22.0,
+      "base_ltv": 59.6
     },
     "GM1952": {
       "flood_risk_ahn_m": -1.93,
@@ -3423,7 +3750,8 @@
       "foundation_source": "AHN4 -1.93m NAP + Groningen soil modifier",
       "mortgage_penetration": 0.422,
       "owner_occupied_pct": 62.0,
-      "social_housing_pct": 30.0
+      "social_housing_pct": 30.0,
+      "base_ltv": 64.5
     },
     "GM1954": {
       "flood_risk_ahn_m": 66.14,
@@ -3433,7 +3761,8 @@
       "foundation_source": "AHN4 +66.14m NAP + Limburg soil modifier",
       "mortgage_penetration": 0.496,
       "owner_occupied_pct": 73.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 58.6
     },
     "GM1955": {
       "flood_risk_ahn_m": 73.33,
@@ -3443,7 +3772,8 @@
       "foundation_source": "AHN4 +73.33m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.449,
       "owner_occupied_pct": 66.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 62.7
     },
     "GM1959": {
       "flood_risk_ahn_m": -0.2,
@@ -3453,7 +3783,8 @@
       "foundation_source": "AHN4 -0.20m NAP + Noord-Brabant soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 64.0
     },
     "GM1960": {
       "flood_risk_ahn_m": 1.68,
@@ -3463,7 +3794,8 @@
       "foundation_source": "AHN4 +1.68m NAP + Gelderland soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 63.5
     },
     "GM1961": {
       "flood_risk_ahn_m": -0.23,
@@ -3473,7 +3805,8 @@
       "foundation_source": "AHN4 -0.23m NAP + Utrecht soil modifier",
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 31.0
+      "social_housing_pct": 31.0,
+      "base_ltv": 66.3
     },
     "GM1963": {
       "flood_risk_ahn_m": 1.53,
@@ -3483,7 +3816,8 @@
       "foundation_source": "AHN4 +1.53m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.476,
       "owner_occupied_pct": 70.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 62.8
     },
     "GM1966": {
       "flood_risk_ahn_m": -0.11,
@@ -3493,7 +3827,8 @@
       "foundation_source": "AHN4 -0.11m NAP + Groningen soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 59.3
     },
     "GM1969": {
       "flood_risk_ahn_m": -0.99,
@@ -3503,7 +3838,8 @@
       "foundation_source": "AHN4 -0.99m NAP + Groningen soil modifier",
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 61.2
     },
     "GM1970": {
       "flood_risk_ahn_m": -0.23,
@@ -3513,7 +3849,8 @@
       "foundation_source": "AHN4 -0.23m NAP + Friesland soil modifier",
       "mortgage_penetration": 0.456,
       "owner_occupied_pct": 67.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 60.3
     },
     "GM1978": {
       "flood_risk_ahn_m": -1.46,
@@ -3523,7 +3860,8 @@
       "foundation_source": "AHN4 -1.46m NAP + Zuid-Holland soil modifier",
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 61.7
     },
     "GM1979": {
       "flood_risk_ahn_m": 0.17,
@@ -3533,7 +3871,8 @@
       "foundation_source": "AHN4 +0.17m NAP +  soil modifier",
       "mortgage_penetration": 0.394,
       "owner_occupied_pct": 58.0,
-      "social_housing_pct": 32.0
+      "social_housing_pct": 32.0,
+      "base_ltv": 62.4
     },
     "GM1980": {
       "flood_risk_ahn_m": -0.72,
@@ -3553,77 +3892,92 @@
     "GM0358": {
       "mortgage_penetration": 0.442,
       "owner_occupied_pct": 65.0,
-      "social_housing_pct": 24.0
+      "social_housing_pct": 24.0,
+      "base_ltv": 68.7
     },
     "GM0370": {
       "mortgage_penetration": 0.517,
       "owner_occupied_pct": 76.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 64.5
     },
     "GM0756": {
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 23.0
+      "social_housing_pct": 23.0,
+      "base_ltv": 61.3
     },
     "GM1684": {
       "mortgage_penetration": 0.428,
       "owner_occupied_pct": 63.0,
-      "social_housing_pct": 27.0
+      "social_housing_pct": 27.0,
+      "base_ltv": 66.1
     },
     "GM0786": {
       "mortgage_penetration": 0.462,
       "owner_occupied_pct": 68.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 63.0
     },
     "GM0398": {
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 21.0
+      "social_housing_pct": 21.0,
+      "base_ltv": 67.1
     },
     "GM1685": {
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 18.0
+      "social_housing_pct": 18.0,
+      "base_ltv": 61.5
     },
     "GM0416": {
       "mortgage_penetration": 0.503,
       "owner_occupied_pct": 74.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 64.6
     },
     "GM0815": {
       "mortgage_penetration": 0.49,
       "owner_occupied_pct": 72.0,
-      "social_housing_pct": 20.0
+      "social_housing_pct": 20.0,
+      "base_ltv": 58.8
     },
     "GM1895": {
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 26.0
+      "social_housing_pct": 26.0,
+      "base_ltv": 63.2
     },
     "GM1702": {
       "mortgage_penetration": 0.517,
       "owner_occupied_pct": 76.0,
-      "social_housing_pct": 15.0
+      "social_housing_pct": 15.0,
+      "base_ltv": 56.3
     },
     "GM0093": {
       "mortgage_penetration": 0.435,
       "owner_occupied_pct": 64.0,
-      "social_housing_pct": 19.0
+      "social_housing_pct": 19.0,
+      "base_ltv": 68.3
     },
     "GM0856": {
       "mortgage_penetration": 0.422,
       "owner_occupied_pct": 62.0,
-      "social_housing_pct": 28.0
+      "social_housing_pct": 28.0,
+      "base_ltv": 66.1
     },
     "GM0096": {
       "mortgage_penetration": 0.265,
       "owner_occupied_pct": 39.0,
-      "social_housing_pct": 34.0
+      "social_housing_pct": 34.0,
+      "base_ltv": 76.1
     },
     "GM0852": {
       "mortgage_penetration": 0.469,
       "owner_occupied_pct": 69.0,
-      "social_housing_pct": 25.0
+      "social_housing_pct": 25.0,
+      "base_ltv": 61.5
     }
   }
 }
