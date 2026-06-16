@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLIMADAPT-NL — Building-level default cascade (Phase 3)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet">
+<style>
+  :root { --bg:#0f172a; --panel:#1e293b; --ink:#e2e8f0; --muted:#94a3b8;
+          --red:#ef4444; --amber:#f59e0b; --green:#22c55e; --blue:#38bdf8; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter,system-ui,sans-serif; background:var(--bg); color:var(--ink); }
+  #map { position:absolute; inset:0; }
+  h1 { font-family:'Space Grotesk',sans-serif; font-size:16px; margin:0 0 2px; }
+  .sub { color:var(--muted); font-size:12px; margin-bottom:12px; line-height:1.4; }
+  #panel { position:absolute; top:16px; left:16px; width:330px; z-index:2;
+           background:rgba(30,41,59,.93); border:1px solid #334155; border-radius:12px;
+           padding:16px 18px; backdrop-filter:blur(6px); }
+  select, button { font-family:inherit; font-size:13px; }
+  select { background:#0f172a; color:var(--ink); border:1px solid #334155; border-radius:8px;
+           padding:6px 8px; width:100%; margin-bottom:10px; }
+  .row { display:flex; align-items:center; gap:8px; margin:10px 0 4px; }
+  #play { background:var(--blue); color:#03263a; border:none; border-radius:8px; font-weight:600;
+          padding:6px 12px; cursor:pointer; }
+  #year { font-family:'JetBrains Mono',monospace; font-weight:600; font-size:15px; min-width:42px; }
+  input[type=range] { flex:1; accent-color:var(--blue); }
+  .kpis { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px; }
+  .kpi { background:#0f172a; border:1px solid #334155; border-radius:8px; padding:8px; text-align:center; }
+  .kpi b { display:block; font-family:'JetBrains Mono',monospace; font-size:18px; }
+  .kpi span { color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.04em; }
+  .stat { font-size:12px; color:var(--muted); margin-top:12px; line-height:1.5; }
+  .stat b { color:var(--ink); font-family:'JetBrains Mono',monospace; }
+  .legend { display:flex; gap:14px; margin-top:12px; font-size:11px; color:var(--muted); }
+  .legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px; vertical-align:middle; }
+  .err { color:var(--amber); font-size:12px; margin-top:10px; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="panel">
+  <h1>Default cascade — building level</h1>
+  <div class="sub">CLIMADAPT-NL Phase 3 ABM. Each dot is a building; it turns
+    <span style="color:var(--red)">red</span> in the year its mortgage defaults.
+    Watch distress spread block-by-block from flood-prone districts.</div>
+  <select id="city">
+    <option value="amsterdam">Amsterdam</option>
+    <option value="rotterdam">Rotterdam</option>
+    <option value="den_haag">Den Haag</option>
+    <option value="utrecht">Utrecht</option>
+    <option value="eindhoven">Eindhoven</option>
+  </select>
+  <div class="row">
+    <button id="play">▶ Play</button>
+    <span id="year">2024</span>
+    <input id="slider" type="range" min="2024" max="2080" value="2024" step="1">
+  </div>
+  <div class="kpis">
+    <div class="kpi"><b id="k-uw">–</b><span>underwater</span></div>
+    <div class="kpi"><b id="k-def">–</b><span>defaulted</span></div>
+    <div class="kpi"><b id="k-ad">–</b><span>adapted</span></div>
+  </div>
+  <div class="stat" id="clusterstat"></div>
+  <div class="legend">
+    <span><i style="background:var(--red)"></i>defaulted</span>
+    <span><i style="background:var(--green)"></i>adapted</span>
+    <span><i style="background:var(--blue)"></i>servicing</span>
+  </div>
+  <div class="err" id="err"></div>
+</div>
+
+<script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+<script>
+const CARTO = {
+  version: 8,
+  sources: { c: { type:'raster', tiles:[
+    'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+    'https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'],
+    tileSize:256, attribution:'© OpenStreetMap © CARTO' } },
+  layers: [{ id:'c', type:'raster', source:'c' }]
+};
+
+const map = new maplibregl.Map({ container:'map', style:CARTO, center:[4.9,52.37], zoom:12 });
+let DATA = null, playing = null;
+
+function paintFor(year) {
+  // default_year uses a 9999 sentinel for survivors, so <= year is false for them.
+  return ['case',
+    ['<=', ['get','default_year'], year], '#ef4444',
+    ['==', ['get','adapted'], 1], '#22c55e',
+    '#38bdf8'];
+}
+
+function setYear(year) {
+  document.getElementById('year').textContent = year;
+  document.getElementById('slider').value = year;
+  if (map.getLayer('blds')) map.setPaintProperty('blds', 'circle-color', paintFor(year));
+  if (!DATA) return;
+  const t = DATA.timeline.find(r => r.year == year) || DATA.timeline[DATA.timeline.length-1];
+  // "defaulted by this year" straight from the points (cumulative).
+  const defByYear = 100 * DATA.features.reduce((n,f)=>n+(f.properties.default_year<=year?1:0),0)/DATA.features.length;
+  document.getElementById('k-uw').textContent  = t.pct_underwater.toFixed(0)+'%';
+  document.getElementById('k-def').textContent = defByYear.toFixed(0)+'%';
+  document.getElementById('k-ad').textContent  = t.adaptation_uptake.toFixed(0)+'%';
+}
+
+async function load(city) {
+  document.getElementById('err').textContent = '';
+  try {
+    const r = await fetch(`outputs/abm_buildings_${city}.geojson`);
+    if (!r.ok) throw new Error(r.status);
+    DATA = await r.json();
+  } catch (e) {
+    document.getElementById('err').textContent =
+      'Could not load outputs/abm_buildings_'+city+'.geojson — run '+
+      '`python3 abm/building_model.py --all`, then serve over http (python3 -m http.server).';
+    return;
+  }
+  const src = map.getSource('blds');
+  if (src) src.setData(DATA);
+  else {
+    map.addSource('blds', { type:'geojson', data:DATA });
+    map.addLayer({ id:'blds', type:'circle', source:'blds',
+      paint:{ 'circle-radius':['interpolate',['linear'],['zoom'],10,1.5,14,3,16,5],
+              'circle-color':paintFor(2024), 'circle-opacity':0.85 } });
+  }
+  if (DATA.meta) {
+    map.flyTo({ center:DATA.meta.center, zoom:12.2 });
+    const m = DATA.meta;
+    document.getElementById('clusterstat').innerHTML =
+      `${m.buildings.toLocaleString()} buildings · Moran's I = <b>${m.morans_i}</b> `+
+      `(spatial clustering; 0 = random)<br>worst-decile cells hold <b>${m.concentration_pct}%</b> of all defaults`;
+  }
+  setYear(+document.getElementById('slider').value);
+}
+
+document.getElementById('slider').addEventListener('input', e => setYear(+e.target.value));
+document.getElementById('city').addEventListener('change', e => load(e.target.value));
+document.getElementById('play').addEventListener('click', () => {
+  const btn = document.getElementById('play');
+  if (playing) { clearInterval(playing); playing=null; btn.textContent='▶ Play'; return; }
+  btn.textContent='⏸ Pause';
+  let y = +document.getElementById('slider').value;
+  if (y >= 2080) y = 2024;
+  playing = setInterval(() => {
+    y++; setYear(y);
+    if (y >= 2080) { clearInterval(playing); playing=null; btn.textContent='▶ Play'; }
+  }, 180);
+});
+
+map.on('load', () => load('amsterdam'));
+</script>
+</body>
+</html>
