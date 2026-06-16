@@ -18,6 +18,7 @@
     <span class="site-logo">◈ NL Mortgage Climate Risk</span>
     <nav class="site-nav">
       <a href="#stress-test">Portfolio Analysis</a>
+      <a href="#live-model">Live ABM</a>
       <a href="#methodology">Methodology</a>
     </nav>
     <span class="site-badge">TU Delft · PhD Research Demo</span>
@@ -182,6 +183,31 @@
         <!-- populated by JS -->
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ══ LIVE AGENT-BASED MODEL ══ -->
+<section id="live-model">
+  <div class="container">
+    <h2 class="section-title">Live Agent-Based Model</h2>
+    <p class="section-desc">The stress test above is a closed-form cross-section. This is the dynamic model behind it: <strong>CLIMADAPT-NL</strong>, an agent-based simulation of a synthetic population of mortgaged households stepped yearly to 2080 under an intensifying climate. Households suffer hazard damage, perceive and learn risk, adapt, and may default — and defaults depress neighbours' prices, cascading. Portfolio risk is an <em>emergent</em> outcome, not a formula. Toggle the resilience policy levers and re-run the simulation live.</p>
+
+    <!-- Embedded Hugging Face Space: github.com/aetherno climadapt-nl ABM -->
+    <div class="abm-embed-wrap">
+      <iframe
+        src="https://aetherno-climadapt-nl.hf.space"
+        title="CLIMADAPT-NL interactive agent-based model"
+        loading="lazy"
+        frameborder="0"
+        width="100%"
+        style="width:100%;height:760px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;">
+      </iframe>
+    </div>
+    <p class="section-desc" style="font-size:13px;color:#64748b;margin-top:10px;">
+      Runs a fast preview ensemble on a free CPU; the model may take ~30–60 s to wake on first load.
+      Full-scale runs (20 × 25,000 agents, Sobol sensitivity analysis, building-level spatial cascades)
+      are in the <a href="https://github.com/RishikeshGovind/nl-climate-mortgage" target="_blank" rel="noopener">source repository</a>.
+    </p>
   </div>
 </section>
 
