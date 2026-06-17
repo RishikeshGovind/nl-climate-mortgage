@@ -192,16 +192,16 @@
     <h2 class="section-title">Try the Live Model</h2>
     <p class="section-desc">The chart above shows a single snapshot. This is the living model behind it, called <strong>CLIMADAPT-NL</strong>. It builds thousands of pretend Dutch households and runs them one year at a time all the way to 2080 as the climate gets worse. Homes get damaged and lose value. Owners who end up owing more than their home is worth can fall behind on payments, and when homes nearby are sold off cheaply, prices drop and the trouble spreads. None of this is set in advance. It builds up on its own from many small choices. Switch the government safety measures on or off below and press Run to see what happens.</p>
 
-    <!-- Embedded Hugging Face Space: github.com/aetherno climadapt-nl ABM -->
+    <!-- Embedded Hugging Face Space via the Gradio web component. Unlike a plain
+         iframe, <gradio-app> auto-resizes to fit its content, so there is no inner
+         scrollbar (no "scroll within a scroll"). The page itself just gets taller. -->
+    <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/6.18.0/gradio.js"></script>
     <div class="abm-embed-wrap">
-      <iframe
+      <gradio-app
         src="https://aetherno-climadapt-nl.hf.space"
-        title="CLIMADAPT-NL interactive agent-based model"
-        loading="lazy"
-        frameborder="0"
-        width="100%"
-        style="width:100%;height:760px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;">
-      </iframe>
+        eager="true"
+        style="display:block;width:100%;min-height:600px;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#f8fafc;">
+      </gradio-app>
     </div>
     <p class="section-desc" style="font-size:13px;color:#64748b;margin-top:10px;">
       This runs a quick version on a free server, so it may take about 30 to 60 seconds to wake up the first time you open it.
